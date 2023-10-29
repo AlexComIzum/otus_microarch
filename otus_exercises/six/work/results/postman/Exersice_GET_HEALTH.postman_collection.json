@@ -1,0 +1,141 @@
+{
+	"info": {
+		"_postman_id": "d45cae6a-af15-4ab1-997a-e848d3258d27",
+		"name": "Exersice GET HEALTH",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30113005",
+		"_collection_link": "https://www.postman.com/alexizum/workspace/otus-exercise-microservice-alex-izum/collection/30113005-d45cae6a-af15-4ab1-997a-e848d3258d27?action=share&source=collection_link&creator=30113005"
+	},
+	"item": [
+		{
+			"name": "get health",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://arch.homework/otusapp/Marina/health",
+					"protocol": "http",
+					"host": [
+						"arch",
+						"homework"
+					],
+					"path": [
+						"otusapp",
+						"Marina",
+						"health"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "health by Marina",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://arch.homework/otusapp/DDfadsadb/health",
+							"protocol": "http",
+							"host": [
+								"arch",
+								"homework"
+							],
+							"path": [
+								"otusapp",
+								"DDfadsadb",
+								"health"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Thu, 28 Sep 2023 07:38:29 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"OK\"\n}"
+				}
+			]
+		},
+		{
+			"name": "http://arch.homework/otusapp/abramov/health",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://arch.homework/otusapp/abramov/health",
+					"protocol": "http",
+					"host": [
+						"arch",
+						"homework"
+					],
+					"path": [
+						"otusapp",
+						"abramov",
+						"health"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "health by Abramov",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://arch.homework/otusapp/abramov/health",
+							"protocol": "http",
+							"host": [
+								"arch",
+								"homework"
+							],
+							"path": [
+								"otusapp",
+								"abramov",
+								"health"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Thu, 28 Sep 2023 08:24:06 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"OK\"\n}"
+				}
+			]
+		}
+	]
+}

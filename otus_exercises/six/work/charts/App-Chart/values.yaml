@@ -1,0 +1,5 @@
+container:
+  image: sergey789/micarchexer:v1
+  
+replicaCount: 2  
+

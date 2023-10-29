@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+metadata:
+    name: {{ .Release.Name }}
+    labels:
+        app: {{ .Release.Name }}-service
+        env : prod
+        owner: AlexIvanov
+spec:
+    selector:
+        app: {{ .Release.Name }}
+    ports:         
+      - name      : appport
+        protocol  : TCP
+        port      : 80
+        targetPort: {{ .Values.server.port }}     
+    type: LoadBalancer   
+ 
+
+
+  
+        
+                        

@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dbuser-cm    
+data: 
+  db_dialect: "org.hibernate.dialect.PostgreSQL10Dialect"
+  db_driver_class: "org.postgresql.Driver"
+  db_provider_class: "org.hibernate.c3p0.internal.C3P0ConnectionProvider"
+  db_url: {{ .Values.db.url }} 
+  db_username: {{ .Values.db.username }} 
+  db_password: {{ .Values.db.password }} 
+  db_current_session_context_class: "thread"
+  db_timeout: "1500"
+  db_acquireRetryAttempts: "4"
+  db_acquireRetryDelay: "3000"
+  db_breakAfterAcquireFailure: "false"
+  db_maxConnectionAge: "6000"
+  db_maxIdleTime: "6000"
+  db_maxIdleTimeExcessConnections: "1800"
+  db_idleConnectionTestPeriod: "3600"
+ 
+  
+  

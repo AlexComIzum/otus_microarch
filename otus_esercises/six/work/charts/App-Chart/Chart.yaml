@@ -1,0 +1,16 @@
+apiVersion: v1
+name: App_Exercise six
+description: Check homework ex №6
+type: application
+version: 0.0.1
+appVersion: "1.0.0"
+
+keywords:
+  - kubernetes
+  - exercese 6
+  - ingress
+  - helm
+  
+maintainers:
+  - name: AlexIvanov
+  

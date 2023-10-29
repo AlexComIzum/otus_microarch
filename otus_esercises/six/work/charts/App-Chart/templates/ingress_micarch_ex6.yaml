@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1   
+kind: Ingress   
+metadata:   
+  name: appingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$3
+    nginx.ingress.kubernetes.io/use-regex: "true"    
+spec: 
+  ingressClassName: nginx  
+  rules:  
+   - host: arch.homework  
+     http:   
+      paths:   
+      - path: /otusapp/([a-zA-Z]*)(/|$)(.*)
+        pathType: Prefix   
+        backend:   
+          service:   
+            name: {{ .Release.Name }}-service
+            port:   
+              number: 80
+          

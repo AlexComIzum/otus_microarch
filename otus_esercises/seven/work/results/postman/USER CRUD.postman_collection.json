@@ -1,0 +1,127 @@
+{
+	"info": {
+		"_postman_id": "97c114d2-2399-4c67-a9eb-ffcdd28cc561",
+		"name": "USER CRUD",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30113005",
+		"_collection_link": "https://www.postman.com/alexizum/workspace/otus-exercise-microservice-alex-izum/collection/30113005-97c114d2-2399-4c67-a9eb-ffcdd28cc561?action=share&source=collection_link&creator=30113005"
+	},
+	"item": [
+		{
+			"name": "Get_User",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://arch.homework/user/?userId=3",
+					"protocol": "http",
+					"host": [
+						"arch",
+						"homework"
+					],
+					"path": [
+						"user",
+						""
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ChangeUser",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"id\":3,\"username\":\"Dima\",\"firstName\":\"Maicovich\",\"lastName\":\"Petrov\",\"email\":\"petrov@ya.ru\",\"phone\":\"+79035727897\"}"
+				},
+				"url": {
+					"raw": "http://arch.homework/user/3",
+					"protocol": "http",
+					"host": [
+						"arch",
+						"homework"
+					],
+					"path": [
+						"user",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SaveUser",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"id\":0,\"username\":\"Foma\",\"firstName\":\"Vemenovich\",\"lastName\":\"Nikolaev\",\"email\":\"nikolaev@ya.ru\",\"phone\":\"+7907555575\"}"
+				},
+				"url": {
+					"raw": "http://arch.homework/user/",
+					"protocol": "http",
+					"host": [
+						"arch",
+						"homework"
+					],
+					"path": [
+						"user",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RemoveUser",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://arch.homework/user/3",
+					"protocol": "http",
+					"host": [
+						"arch",
+						"homework"
+					],
+					"path": [
+						"user",
+						"3"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

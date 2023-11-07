@@ -1,0 +1,15 @@
+container:
+  image: sergey789/exuser:v2
+  
+replicaCount: 1  
+
+server:
+  port: 8000
+    
+db:
+  url: jdbc:postgresql://psgqlbd-postgresql:5432/postgres
+  
+port:
+  name: user-port  
+ 
+

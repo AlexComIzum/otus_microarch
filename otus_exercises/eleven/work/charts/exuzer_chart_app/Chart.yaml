@@ -1,0 +1,21 @@
+apiVersion: v1
+name: App_Exercise seven
+description: Check homework ex №7
+type: application
+version: 0.0.2
+appVersion: "2.0.0"
+
+keywords:
+  - kubernetes
+  - exercese 7
+  - ingress
+  - helm
+  - security
+  - flyway migration
+  - postgresql
+  - user CRUD 
+  - job
+  
+maintainers:
+  - name: AlexIvanov
+  

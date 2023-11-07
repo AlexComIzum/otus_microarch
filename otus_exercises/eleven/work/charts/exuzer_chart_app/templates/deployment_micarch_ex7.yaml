@@ -1,0 +1,153 @@
+apiVersion : apps/v1
+kind : Deployment
+metadata:
+    name: {{ .Release.Name }}
+    labels:
+       app: {{ .Release.Name }}-ex-dep
+spec:
+    replicas: {{ .Values.replicaCount }}
+    selector:
+        matchLabels:
+            app: {{ .Release.Name }}
+    template:
+        metadata:
+            labels:
+                app: {{ .Release.Name }}
+        spec:
+            containers:
+              - name : {{ .Release.Name }}-dep
+                image: {{ .Values.container.image }}                              
+                ports:
+                  - containerPort: {{ .Values.server.port }}        
+                env:               
+                 
+                - name: server.port
+                  value: "{{ .Values.server.port }}"
+                      
+                - name: db_dialect
+                  valueFrom:
+                    configMapKeyRef:
+                      name: dbuser-cm  
+                      key: db_dialect       
+                      
+                - name: db_driver_class
+                  valueFrom:
+                    configMapKeyRef:
+                      name: dbuser-cm  
+                      key: db_driver_class       
+                      
+                - name: db_provider_class
+                  valueFrom:
+                    configMapKeyRef:
+                      name: dbuser-cm  
+                      key: db_provider_class   
+                
+                - name: db_url
+                  valueFrom:
+                    configMapKeyRef:
+                      name: dbuser-cm  
+                      key: db_url
+                
+                - name: db_username
+                  valueFrom:                    
+                    secretKeyRef:
+                      name: exuser-secret
+                      key: username                      
+                
+                - name: db_password
+                  valueFrom:                    
+                    secretKeyRef:
+                      name: exuser-secret
+                      key: password
+                
+                - name: db_current_session_context_class
+                  valueFrom:
+                    configMapKeyRef:
+                      name: dbuser-cm  
+                      key: db_current_session_context_class            
+                
+                - name: db_timeout
+                  valueFrom:
+                    configMapKeyRef:
+                      name: dbuser-cm  
+                      key: db_timeout
+                
+                - name: db_acquireRetryAttempts
+                  valueFrom:
+                    configMapKeyRef:
+                      name: dbuser-cm  
+                      key: db_acquireRetryAttempts            
+                
+                - name: db_acquireRetryDelay
+                  valueFrom:
+                    configMapKeyRef:
+                      name: dbuser-cm  
+                      key: db_acquireRetryDelay
+                
+                - name: db_breakAfterAcquireFailure
+                  valueFrom:
+                    configMapKeyRef:
+                      name: dbuser-cm  
+                      key: db_breakAfterAcquireFailure            
+                
+                - name: db_maxConnectionAge
+                  valueFrom:
+                    configMapKeyRef:
+                      name: dbuser-cm  
+                      key: db_maxConnectionAge
+                
+                - name: db_maxIdleTime
+                  valueFrom:
+                    configMapKeyRef:
+                      name: dbuser-cm  
+                      key: db_maxIdleTime           
+                
+                - name: db_maxIdleTimeExcessConnections
+                  valueFrom:
+                    configMapKeyRef:
+                      name: dbuser-cm  
+                      key: db_maxIdleTimeExcessConnections
+                
+                - name: db_idleConnectionTestPeriod
+                  valueFrom:
+                    configMapKeyRef:
+                      name: dbuser-cm  
+                      key: db_idleConnectionTestPeriod    
+                
+                - name: management.security.enabled
+                  valueFrom:
+                    configMapKeyRef:
+                      name: metrics-cm  
+                      key: management.security.enabled
+                
+                - name: management.endpoint.health.show-details
+                  valueFrom:
+                    configMapKeyRef:
+                      name: metrics-cm  
+                      key: management.endpoint.health.show-details
+                
+                - name: management.metrics.distribution.slo.http.server.requests
+                  valueFrom:
+                    configMapKeyRef:
+                      name: metrics-cm  
+                      key: management.metrics.distribution.slo.http.server.requests
+                
+                - name: management.metrics.export.prometheus.enabled
+                  valueFrom:
+                    configMapKeyRef:
+                      name: metrics-cm  
+                      key: management.metrics.export.prometheus.enabled
+                
+                - name: management.endpoints.web.exposure.include
+                  valueFrom:
+                    configMapKeyRef:
+                      name: metrics-cm  
+                      key: management.endpoints.web.exposure.include
+                
+                - name: management.metrics.distribution.percentiles-histogram.http.server.requests
+                  valueFrom:
+                    configMapKeyRef:
+                      name: metrics-cm 
+                      key: management.metrics.distribution.percentiles-histogram.http.server.requests
+                                 
+

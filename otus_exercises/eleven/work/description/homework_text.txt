@@ -2,15 +2,16 @@
 
 Домашняя работа.
 
-а) Инструментировал сервис exuser метриками с помощью spring boot и подключением с соответствующих dependencies. 
-б) Сделал дашборд в Графане, в котором метрики разбиты по API методам. Приложил файл grafana_metrics_model.json - json-дашборд по домашнему заданию.
-   Графики в дашборд:
+а) Инструментировал сервис exuser метриками с помощью spring boot и подключением соответствующих dependencies. 
+б) Сделал дашборд в Графане, в котором метрики разбиты по API методам. 
+   Приложил файл grafana_metrics_model.json - json-дашборд по домашнему заданию.
+   Графики в дашборде:
    1) Latency (response time) с квантилями по 0.5, 0.95, 0.99, max - Row дашборда "Latency by HTTP methods". 
-      прикрепил скрин Latency_by_HTTP_method.jpg;
+      Прикрепил скрин Latency_by_HTTP_method.jpg;
    2) RPS - Row дашборда "RPS by API methods".
-      Прикрепил два скрина, т.к. при нагрузочном тестировании возникали большие задержки - график с rate [1m] выглядел обрывчато, поэтому сделал 2 скрина с разным временем:
-      - RPS_BY_API_METHOD_One_minute.jpg(rate по 1 минуте);
-      - RPS_BY_API_METHOD_four_minutes.jpg((rate по 4 минутам));
+      Прикрепил два скрина, т.к. при нагрузочном тестировании возникали большие задержки - график с rate [1m] выглядел обрывчато, поэтому сделал 2 скрина с разными интервалами:
+      - RPS_BY_API_METHOD_One_minute.jpg(rate 1 минута);
+      - RPS_BY_API_METHOD_four_minutes.jpg(rate 4 минуты);
    3) Error Rate - количество 500ых ответов - Row дашборда "Error Rate".
       Прикрепил скрин Error_Rate_by_API_Method.jpg;
 в) Добавил в дашборд графики с метриками в целом по сервису, взятые с nginx-ingress-controller.
@@ -19,25 +20,26 @@
       Приложил скрин Latency_nginx_ing_controller.jpg    
    2) RPS - Row дашборда "Latency and RPS from nginx-ingress-controller"
       Прикрепил два скрина, т.к. при нагрузочном тестировании возникали большие задержки - график с rate [1m] выглядел обрывчато, поэтому сделал 2 скрина с разным временем:
-      Прикрепил скрин RPS_nginx_ing_controller.jpg, RPS_nginx_ing_controller_four_minutes.jpg  
+       - RPS_nginx_ing_controller.jpg(rate 1 минута);
+       - RPS_nginx_ing_controller_four_minutes.jpg(rate 4 минуты);  
    3) Error Rate - количество 500ых ответов - Row дашборда "Error Rate"
       Прикрепил скрин Error_Rate_nginx_ing_controller.jpg
-г) Настроил алертинг на панелях в ROWs "Error Rate", "Latency by HTTP method", "Latency and RPS from ngшnx-ingress-controller"
+г) Настроил алертинг на панелях в ROWs "Error Rate", "Latency by HTTP method", "Latency and RPS from ngшnx-ingress-controller".
 д) Сделал задание со звездочкой - 
    1) Добавил графики с метриками потребление подами приложения памяти и CPU
       Row дашборда "System".
       Прикрепил скрин CPU_Memeory_by_pod.jpg
    2) Установил экспортер postgres-exporter для prometheus. 
       Добавил графики с метриками работы БД:
-      Row дашборда "PostgreSql BD" и "Database Stats".
+      Rows дашборда "PostgreSql BD" и "Database Stats".
       Забыл указать unit-ы в шкалах графиков, поэтому приложил два скрина -  второй скрин с unit-ами сделал позже(диапазон времени показа графика увеличил до 1 часа).
       Прикрепил скрины Database.jpg и Database_with_unit.jpg(c unit-ами).
       В домашнем задании это не требовалось, но дополнительно приложил еще скрин System_extend.jpg(ROW дашборда "System extended"). 
       В нем отражаются метрики по системе(Memory, CPU).
 
 
-В домашнем задании жто не требовалось, но решил приложить данные для развертывания всего окружения для выполнения поставленной задачи.
-Ссылка на github с манифестами: 
+В домашнем задании это не требовалось, но решил приложить манифесты и команды развертывания всего окружения для выполнения поставленной задачи.
+Ссылка на github с манифестами: https://github.com/AlexComIzum/otus_microarch/tree/master/otus_exercises/eleven/work/charts.
 Команды:
    а) установка ingress-nginx
       helm install ingress-nginx ingress-nginx --repo https://kubernetes.github.io/ingress-nginx 
@@ -55,4 +57,4 @@
    ж) Установка экспортера postgres-exporter
       helm install pgexporter prometheus-community/prometheus-postgres-exporter -f .\prometheus_postgres_exporter\secret_postgresql_exporter.yaml -f .\prometheus_postgres_exporter\values.yaml      
 
-      (kubectl port-forward service/stack-grafana  9000:80)
+      (kubectl port-forward service/stack-grafana  9000:80 - предсотавление доступа к Grafana)

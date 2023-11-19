@@ -1,0 +1,18 @@
+apiVersion: v1
+name: App_Exercise fourteen identity provider 
+description: Check homework ex №14 
+type: application
+version: 0.0.3
+appVersion: "5.0.0"
+
+keywords:
+  - kubernetes
+  - exercese 7
+  - ingress
+  - helm
+  - flyway migration
+  - job
+  
+maintainers:
+  - name: AlexIvanov
+  

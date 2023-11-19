@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-idprov-configmap
+
+data:  
+  db_url: {{ .Values.db.url }}       
+
+  V1_1__create_table.sql: |     
+    CREATE TABLE public.authuser (
+      id bigint NOT NULL,
+      username text,
+      firstname text,
+      lastname text,
+      email text,
+      phone text,
+      password text,
+      accountnonexpired boolean,
+      accountnonlocked boolean,
+      credentialsnonexpired boolean,
+      enabled boolean,
+      PRIMARY KEY (id)
+      );
+
+  V1_2__alter_table.sql: |    
+    ALTER TABLE IF EXISTS public.authuser
+      OWNER to ${username};
+  V1_3__drop_sequence_table.sql: |       
+    DROP SEQUENCE IF EXISTS public.authuser_id_seq;  
+      
+  V1_4__create_seq.sql: |        
+    CREATE SEQUENCE IF NOT EXISTS public.authuser_id_seq
+      INCREMENT 1
+      START 1
+      MINVALUE 1
+      MAXVALUE 9223372036854775807
+     CACHE 1; 
+  V1_5__alter_seq.sql: |    
+    ALTER SEQUENCE public.authuser_id_seq
+    OWNER TO ${username};       
+
+
+  
+  

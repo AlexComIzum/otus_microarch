@@ -1,0 +1,18 @@
+container:
+  image: sergey789/idenprovjwt:v5.1
+  
+replicaCount: 1  
+
+server:
+  port: 8000
+    
+db:
+  url: jdbc:postgresql://bdidenprov-postgresql.authprovider:5432/postgres
+  
+port:
+  name: user-port  
+  
+secret:
+  jwt: jwtsecret
+ 
+

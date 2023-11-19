@@ -1,0 +1,34 @@
+@startuml
+
+
+Пользователь -> APIgateway: POST /userprofile header-JSESSIONID userprofile
+APIgateway -> identprov: GET /authenticate header-JSESSIONID
+
+identprov --> APIgateway: header-Authorization(JWT token),X-User,X-Email,X-First-Name
+APIgateway -> userprofile: /userprofile header-Authorization(JWT token),X-User,X-Email,X-First-Name,JSESSIONID; userprofile
+
+userprofile -->APIgateway: response
+APIgateway --> Пользователь:  response
+
+
+Пользователь -> APIgateway: GET /userprofile header-JSESSIONID
+APIgateway -> identprov: GET /authenticate header-JSESSIONID
+
+identprov --> APIgateway: header-Authorization(JWT token),X-User,X-Email,X-First-Name
+APIgateway -> userprofile: /userprofile header-Authorization(JWT token),X-User,X-Email,X-First-Name,JSESSIONID
+
+userprofile -->APIgateway: userprofile
+APIgateway --> Пользователь:  userprofile
+
+
+Пользователь -> APIgateway: PUT /userprofile userprofile,header-JSESSIONID 
+APIgateway -> identprov: GET /authenticate userprofile,header-JSESSIONID 
+
+identprov --> APIgateway: header-Authorization(JWT token),X-User,X-Email,X-First-Name
+APIgateway -> userprofile: /userprofile header-Authorization(JWT token),X-User,X-Email,X-First-Name,JSESSIONID
+
+userprofile -->APIgateway: response
+APIgateway --> Пользователь:  response
+
+
+@enduml

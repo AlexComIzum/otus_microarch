@@ -1,0 +1,10 @@
+replicaCount: 1  
+
+server:
+  port: 8000
+    
+db:
+  url: jdbc:postgresql://bduserprofile-postgresql.authprovider:5434/postgres
+  username: postgres
+  password: admin    
+

@@ -1,0 +1,73 @@
+@startuml
+
+
+Пользователь -> APIgateway: POST /register user
+APIgateway -> identprov: POST /register user
+
+identprov --> APIgateway:  user
+APIgateway --> Пользователь:  user
+
+
+
+Пользователь -> APIgateway: POST /login username, password
+APIgateway -> identprov: POST /login username, password
+
+identprov --> APIgateway:   header-JSESSIONID
+APIgateway --> Пользователь: header-JSESSIONID
+
+
+Пользователь -> APIgateway: GET /authenticate header-JSESSIONID
+APIgateway -> identprov: GET /authenticate header-JSESSIONID
+
+identprov --> APIgateway: JWT token
+APIgateway --> Пользователь: JWT token
+
+
+
+Пользователь -> APIgateway: POST /userprofile header-JSESSIONID userprofile
+APIgateway -> identprov: GET /authenticate header-JSESSIONID
+
+identprov --> APIgateway: header-Authorization(JWT token),X-User,X-Email,X-First-Name
+APIgateway -> userprofile: /userprofile header-Authorization(JWT token),X-User,X-Email,X-First-Name,JSESSIONID; userprofile
+
+userprofile -->APIgateway: response
+APIgateway --> Пользователь:  response
+
+
+Пользователь -> APIgateway: GET /userprofile header-JSESSIONID
+APIgateway -> identprov: GET /authenticate header-JSESSIONID
+
+identprov --> APIgateway: header-Authorization(JWT token),X-User,X-Email,X-First-Name
+APIgateway -> userprofile: /userprofile header-Authorization(JWT token),X-User,X-Email,X-First-Name,JSESSIONID
+
+userprofile -->APIgateway: userprofile
+APIgateway --> Пользователь:  userprofile
+
+
+Пользователь -> APIgateway: PUT /userprofile userprofile,header-JSESSIONID 
+APIgateway -> identprov: GET /authenticate userprofile,header-JSESSIONID 
+
+identprov --> APIgateway: header-Authorization(JWT token),X-User,X-Email,X-First-Name
+APIgateway -> userprofile: /userprofile header-Authorization(JWT token),X-User,X-Email,X-First-Name,JSESSIONID
+
+userprofile -->APIgateway: response
+APIgateway --> Пользователь:  response
+
+
+Пользователь -> APIgateway: POST /logout header-JSESSIONID
+APIgateway -> identprov: POST /logout header-JSESSIONID
+
+identprov --> APIgateway:   response
+APIgateway --> Пользователь: response
+
+
+Пользователь -> APIgateway: GET /userprofile header-JSESSIONID
+APIgateway -> identprov: GET /authenticate header-JSESSIONID
+
+identprov --> APIgateway: error 401
+APIgateway -> identprov: GET /signin header-JSESSIONID
+
+identprov --> APIgateway: identprov --> APIgateway: Please go to login...
+APIgateway --> Пользователь:  Please go to login...
+
+@enduml

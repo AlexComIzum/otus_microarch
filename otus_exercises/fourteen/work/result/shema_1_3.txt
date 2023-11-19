@@ -1,0 +1,19 @@
+@startuml
+
+Пользователь -> APIgateway: POST /logout header-JSESSIONID
+APIgateway -> identprov: POST /logout header-JSESSIONID
+
+identprov --> APIgateway:   response
+APIgateway --> Пользователь: response
+
+
+Пользователь -> APIgateway: GET /userprofile header-JSESSIONID
+APIgateway -> identprov: GET /authenticate header-JSESSIONID
+
+identprov --> APIgateway: error 401
+APIgateway -> identprov: GET /signin header-JSESSIONID
+
+identprov --> APIgateway: identprov --> APIgateway: Please go to login...
+APIgateway --> Пользователь:  Please go to login...
+
+@enduml

@@ -1,0 +1,758 @@
+{
+	"info": {
+		"_postman_id": "6f75be4b-8c1a-4ab0-9152-29952935cdbb",
+		"name": "Exercise Authorization",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30113005",
+		"_collection_link": "https://www.postman.com/alexizum/workspace/otus-exercise-microservice-alex-izum/collection/30113005-6f75be4b-8c1a-4ab0-9152-29952935cdbb?action=share&source=collection_link&creator=30113005"
+	},
+	"item": [
+		{
+			"name": "User_Registration_1",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.globals.set(\"baseUrl\", \"arch.homework\");\r",
+							"pm.collectionVariables.set(\"password_user_1\", pm.variables.replaceIn('{{$randomPassword}}'));\r",
+							"pm.collectionVariables.set(\"email\", pm.variables.replaceIn('{{$randomEmail}}'));\r",
+							"pm.collectionVariables.set(\"username_user_1\", pm.variables.replaceIn('{{$randomFirstName}}'));\r",
+							"pm.collectionVariables.set(\"firstName\", pm.variables.replaceIn('{{$randomFirstName}}'));\r",
+							"pm.collectionVariables.set(\"lastName\", pm.variables.replaceIn('{{$randomLastName}}'));\r",
+							"pm.collectionVariables.set(\"phone\", pm.variables.replaceIn('{{$randomPhoneNumber}}'));"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseJSON = JSON.parse(responseBody);\r",
+							"pm.collectionVariables.set(\"user_id_1\", responseJSON[\"id\"]);\r",
+							"\r",
+							"pm.test(\"test token data\", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"id\":0,\"username\":\"{{username_user_1}}\",\"firstName\":\"{{firstName}}\",\"lastName\":\"{{lastName}}\",\"email\":\"{{email}}\",\"phone\":\"{{phone}}\",\"password\":\"{{password_user_1}}\"}"
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/register",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login_user1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseJSON = pm.cookies.get('JSESSIONID')\r",
+							"pm.collectionVariables.set(\"JSESSIONID_one\", pm.cookies.get('JSESSIONID'));\r",
+							"\r",
+							"pm.test(\"test token data\", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData.status).to.eql(\"ok\")\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\"login\":\"{{username_user_1}}\",\"password\":\"{{password_user_1}}\"}"
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/login",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Authenticate",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"test token data\", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "JSESSIONID",
+						"value": "{{JSESSIONID_one}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://{{baseUrl}}/authenticate",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"authenticate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddUserProfile_1",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.collectionVariables.set(\"age\", pm.variables.replaceIn('{{$randomInt}}'));\r",
+							"pm.collectionVariables.set(\"country\", pm.variables.replaceIn('{{$randomCountry}}'));"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseJSON = pm.cookies.get('JSESSIONID')\r",
+							"pm.collectionVariables.set(\"JSESSIONID_one\", pm.cookies.get('JSESSIONID'));\r",
+							"\r",
+							"pm.test(\"test token data\", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData.code).to.eql(0)\r",
+							"pm.expect(jsonData.message).to.eql(\"successful operation\")\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "JSESSIONID",
+						"value": "{{JSESSIONID_one}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"userid\":{{user_id_1}},\"age\":{{age}},\"country\":\"{{country}}\"}"
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/userprofile",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"userprofile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetUserProfile_1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"test token data\", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData.data.userid).to.eql(pm.collectionVariables.get(\"user_id_1\"))\r",
+							"pm.expect(jsonData.data.country).to.eql(pm.collectionVariables.get(\"country\"))\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "JSESSIONID",
+						"value": "{{JSESSIONID_one}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://{{baseUrl}}/userprofile?userid={{user_id_1}}",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"userprofile"
+					],
+					"query": [
+						{
+							"key": "userid",
+							"value": "{{user_id_1}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateUserProfile_1",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"age\", pm.variables.replaceIn('{{$randomInt}}'));\r",
+							"pm.collectionVariables.set(\"country\", pm.variables.replaceIn('{{$randomCountry}}'));"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"test token data\", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData.code).to.eql(200)\r",
+							"pm.expect(jsonData.message).to.eql(\"user updated\")\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "JSESSIONID",
+						"value": "{{JSESSIONID_one}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"userid\":{{user_id_1}},\"age\":{{age}},\"country\":\"{{country}}\"}"
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/userprofile/{{user_id_1}}",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"userprofile",
+						"{{user_id_1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout_user1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"test token data\", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData.status).to.eql(\"ok\")\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "JSESSIONID",
+						"value": "{{JSESSIONID_one}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://{{baseUrl}}/logout",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"logout"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						},
+						{
+							"key": "Content-type",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetUserProfileAfterLogout_1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"test token data\", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "JSESSIONID",
+						"value": "{{JSESSIONID_one}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://{{baseUrl}}/userprofile?userid=2",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"userprofile"
+					],
+					"query": [
+						{
+							"key": "userid",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User_Registration_2",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"password_user_2\", pm.variables.replaceIn('{{$randomPassword}}'));\r",
+							"pm.collectionVariables.set(\"email_2\", pm.variables.replaceIn('{{$randomEmail}}'));\r",
+							"pm.collectionVariables.set(\"username_user_2\", pm.variables.replaceIn('{{$randomFirstName}}'));\r",
+							"pm.collectionVariables.set(\"firstName_2\", pm.variables.replaceIn('{{$randomFirstName}}'));\r",
+							"pm.collectionVariables.set(\"lastName_2\", pm.variables.replaceIn('{{$randomLastName}}'));\r",
+							"pm.collectionVariables.set(\"phone_2\", pm.variables.replaceIn('{{$randomPhoneNumber}}'));\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseJSON = JSON.parse(responseBody);\r",
+							"pm.collectionVariables.set(\"user_id_2\", responseJSON[\"id\"]);\r",
+							"\r",
+							"pm.test(\"test token data\", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"\r",
+							"var jsonData = pm.response.json()\r",
+							"pm.expect(jsonData.username).to.eql(pm.collectionVariables.get(\"username_user_2\"))\r",
+							"pm.expect(jsonData.firstName).to.eql(pm.collectionVariables.get(\"firstName_2\"))\r",
+							"pm.expect(jsonData.lastName).to.eql(pm.collectionVariables.get(\"lastName_2\"))\r",
+							"pm.expect(jsonData.email).to.eql(pm.collectionVariables.get(\"email_2\"))\r",
+							"pm.expect(jsonData.phone).to.eql(pm.collectionVariables.get(\"phone_2\"))\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"id\":0,\"username\":\"{{username_user_2}}\",\"firstName\":\"{{firstName_2}}\",\"lastName\":\"{{lastName_2}}\",\"email\":\"{{email_2}}\",\"phone\":\"{{phone_2}}\",\"password\":\"{{password_user_2}}\"}"
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/register",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login_user2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseJSON = pm.cookies.get('JSESSIONID')\r",
+							"pm.collectionVariables.set(\"JSESSIONID_two\", pm.cookies.get('JSESSIONID'));\r",
+							"\r",
+							"pm.test(\"test token data\", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData.status).to.eql(\"ok\")\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\"login\":\"user_test_2\",\"password\":\"password789\"}"
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/login",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Authenticate_user_2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"test token data\", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "JSESSIONID",
+						"value": "{{JSESSIONID_two}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://{{baseUrl}}/authenticate",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"authenticate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetUserProfile_1_2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"test token data\", function () {\r",
+							"pm.response.to.have.status(401);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "JSESSIONID",
+						"value": "{{JSESSIONID_two}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://{{baseUrl}}/userprofile?userid={{user_id_1}}",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"userprofile"
+					],
+					"query": [
+						{
+							"key": "userid",
+							"value": "{{user_id_1}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "password",
+			"value": ""
+		},
+		{
+			"key": "email",
+			"value": ""
+		},
+		{
+			"key": "username",
+			"value": ""
+		},
+		{
+			"key": "firstName",
+			"value": ""
+		},
+		{
+			"key": "lastName",
+			"value": ""
+		},
+		{
+			"key": "phone",
+			"value": ""
+		},
+		{
+			"key": "baseUrl\n",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "password_user_1",
+			"value": ""
+		},
+		{
+			"key": "username_user_1",
+			"value": ""
+		},
+		{
+			"key": "user_id_1",
+			"value": ""
+		},
+		{
+			"key": "JSESSIONID_one",
+			"value": ""
+		},
+		{
+			"key": "age",
+			"value": ""
+		},
+		{
+			"key": "country",
+			"value": ""
+		},
+		{
+			"key": "password_user_2",
+			"value": ""
+		},
+		{
+			"key": "email_2",
+			"value": ""
+		},
+		{
+			"key": "username_user_2",
+			"value": ""
+		},
+		{
+			"key": "firstName_2",
+			"value": ""
+		},
+		{
+			"key": "lastName_2",
+			"value": ""
+		},
+		{
+			"key": "phone_2",
+			"value": ""
+		},
+		{
+			"key": "user_id_2",
+			"value": ""
+		},
+		{
+			"key": "JSESSIONID_two",
+			"value": ""
+		}
+	]
+}

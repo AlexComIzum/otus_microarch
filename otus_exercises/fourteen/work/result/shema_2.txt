@@ -1,0 +1,32 @@
+@startuml
+
+Пользователь -> APIgateway: POST /register user
+APIgateway -> identprov: POST /register user
+
+identprov --> APIgateway:  user
+APIgateway --> Пользователь:  user
+
+
+Пользователь -> APIgateway: POST /login username, password
+APIgateway -> identprov: POST /login username, password
+
+identprov --> APIgateway:   header-JSESSIONID
+APIgateway --> Пользователь: header-JSESSIONID
+
+Пользователь -> APIgateway: GET /authenticate header-JSESSIONID
+APIgateway -> identprov: GET /authenticate header-JSESSIONID
+
+identprov --> APIgateway: JWT token
+APIgateway --> Пользователь: JWT token
+
+
+Пользователь -> APIgateway: GET /userprofile header-JSESSIONID
+APIgateway -> identprov: GET /authenticate header-JSESSIONID
+
+identprov --> APIgateway: header-Authorization(JWT token),X-User,X-Email,X-First-Name
+APIgateway -> userprofile: /userprofile header-Authorization(JWT token),X-User,X-Email,X-First-Name,JSESSIONID
+
+userprofile --> APIgateway: error 401
+APIgateway --> Пользователь:  error 401
+
+@enduml

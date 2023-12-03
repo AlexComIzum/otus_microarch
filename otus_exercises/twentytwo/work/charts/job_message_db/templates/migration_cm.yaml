@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-message-configmap
+  namespace: {{ .Values.app.namespace }}
+
+data:  
+  db_url: {{ .Values.db.url }}       
+
+  V1_1__create_table.sql: |     
+    CREATE TABLE public.message (
+    id bigint NOT NULL,
+    uid text NOT NULL,
+    request text,
+    response text
+    );
+
+  V1_2__alter_table.sql: |    
+    ALTER TABLE IF EXISTS public.message
+      OWNER to ${username};
+  V1_3__drop_sequence_table.sql: |       
+    DROP SEQUENCE IF EXISTS public.message_id_seq;  
+      
+  V1_4__create_seq.sql: |        
+    CREATE SEQUENCE IF NOT EXISTS public.message_id_seq
+      INCREMENT 1
+      START 1
+      MINVALUE 1
+      MAXVALUE 9223372036854775807
+     CACHE 1; 
+  V1_5__alter_seq.sql: |    
+    ALTER SEQUENCE public.message_id_seq
+    OWNER TO ${username};       
+  
+  V1_6__alter_seq.sql: |    
+    ALTER TABLE ONLY public.message
+    ADD CONSTRAINT message_pkey PRIMARY KEY (id);
+
+
+  
+  

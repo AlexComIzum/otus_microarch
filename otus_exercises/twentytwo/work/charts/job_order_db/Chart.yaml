@@ -1,0 +1,20 @@
+apiVersion: v1
+name: App_Exercise 22, idempotency, order
+description: Check homework ex №22
+type: application
+version: 0.0.1
+appVersion: "3.0.0"
+
+keywords:
+  - kubernetes
+  - order
+  - idempotency
+  - exercese 22
+  - ingress
+  - helm
+  - flyway migration
+  - job
+  
+maintainers:
+  - name: AlexIvanov
+  

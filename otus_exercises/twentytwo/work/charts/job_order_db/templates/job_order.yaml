@@ -1,0 +1,52 @@
+# migration/migration-job.yml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: migration-order-job
+  namespace: {{ .Values.app.namespace }}
+
+spec:
+  template:
+    spec:
+      containers:
+        - name: flyway
+          image: boxfuse/flyway:5.2.4
+          command: ["flyway", "-outOfOrder=true", "-validateOnMigrate=false", "migrate"]                     
+          env:
+            - name: FLYWAY_BASELINE_ON_MIGRATE
+              value: 'true'
+            - name: FLYWAY_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-order-configmap  
+                  key: db_url
+            - name: FLYWAY_USER
+              valueFrom:                    
+                secretKeyRef:
+                  name: migration-order-secret
+                  key: username 
+            - name: FLYWAY_PASSWORD
+              valueFrom:                    
+                secretKeyRef:
+                  name: migration-order-secret
+                  key: password
+            - name: FLYWAY_PLACEHOLDER_REPLACEMENT
+              value: "true"
+            - name: FLYWAY_PLACEHOLDERS_USERNAME
+              valueFrom:                    
+                secretKeyRef:
+                  name: migration-order-secret
+                  key: username
+            - name: FLYWAY_PLACEHOLDERS_PASSWORD
+              valueFrom:                    
+                secretKeyRef:
+                  name: migration-order-secret
+                  key: password
+          volumeMounts:
+            - mountPath: /flyway/sql
+              name: sql
+      volumes:
+        - name: sql
+          configMap:
+            name: postgres-order-configmap
+      restartPolicy: Never

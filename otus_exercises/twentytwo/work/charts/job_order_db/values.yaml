@@ -1,0 +1,12 @@
+replicaCount: 1  
+
+server:
+  port: 8085
+    
+db:
+  url: jdbc:postgresql://bdorder-postgresql.order-ns:5434/postgres
+  username: postgres
+  password: admin    
+
+app:
+  namespace: order-ns

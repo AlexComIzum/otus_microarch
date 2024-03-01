@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:  
+  name: kafka-cm
+  namespace: {{ .Values.app.namespace }}
+data: 
+  fermnotification.consumer.kafka.topic: {{ .Values.kafka.consumer.topic }} 
+  fermnotification.consumer.kafka.url: {{ .Values.kafka.consumer.url }}
+  fermnotification.consumer.kafka.group.id: {{ .Values.kafka.consumer.group.id }}
+  fermnotification.consumer.kafka.partition: "{{ .Values.kafka.consumer.partition }}"
+  fermnotification.consumer.kafka.auto.offset.reset: "earliest" 
+  fermnotification.consumer.kafka.enable.auto.commit: "false" 
+  fermnotification.consumer.kafka.max.poll.interval.ms: "172800000"
+  fermnotification.consumer.kafka.max.poll.records: "3"
+  fermnotification.consumer.kafka.default.api.timeout.ms: "172800000"  
+  

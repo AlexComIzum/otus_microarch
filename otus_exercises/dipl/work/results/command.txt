@@ -1,0 +1,49 @@
+Команды
+I) а) запустить kafka:
+      создать следующие topic: advstatusin, delivery, deliveryrs, payment, paymentrs, notifier
+      kafka настроена на url 192.168.45.108:9092
+   	
+II) 1) minikube addons enable ingress  либо  helm install nginx ingress-nginx/ingress-nginx --namespace ingress-ns -f ./ingress/nginx-ingress.yaml 
+    2) kubectl create namespace ferm-ns
+    3) Устанавливаем БД
+       helm install bdferm bitnami/postgresql -f ./postgre_ferm_value/values.yaml --namespace ferm-ns
+    4) запускаем Job для создания схем, таблиц и т.п. в БД
+       helm install jobferm ./job_ferm_db
+    5) установка prometheus
+       helm install stack prometheus-community/kube-prometheus-stack -f .\prometheus\prometheus.yaml
+    6) Установка fluent-bit для сбора логов
+       helm install fluent-bit ./fluent-bit
+    7) kubectl create namespace authprovider	
+    8) helm install identprov ./identproviderjwt
+    9) kubectl create namespace userprofilens
+   10) helm install userprofile ./userprofile
+   11) kubectl create namespace advwr-ns
+   12) Развертывание приложения advwr    
+       helm install advwr ./advwr
+   13) kubectl create namespace payment-ns 
+   14) Развертывание приложения payment.    
+       helm install payment ./payment
+   15) kubectl create namespace delivery-ns  
+   16) Развертывание приложения delivery.    
+       helm install delivery ./delivery
+   17) kubectl create namespace fermnotif-ns  
+   18) Развертывание приложения fermnotification. 
+       helm install fermnotification ./fermnotification
+   19) kubectl create namespace orderwr-ns  
+   20) Развертывание приложения orderwr
+       helm install orderwr ./orderwr
+   21) Обновление ingress-nginx для отправки метрик в prometheus
+       helm upgrade ingress-nginx ingress-nginx/ingress-nginx --set controller.metrics.enabled=true --set controller.metrics.serviceMonitor.enabled=true --set controller.metrics.serviceMonitor.additionalLabels.release="stack"
+   22) Установка экспортера postgres-exporter
+       helm install pgexporter prometheus-community/prometheus-postgres-exporter -f .\prometheus_postgres_exporter\secret_postgresql_exporter.yaml -f .\prometheus_postgres_exporter\values.yaml      
+
+III) Запуск opensearch и opensearch-dashboards для сбора метрик
+     В opensearch-dashboards искать source "fermerdipl"
+     fluent-bit сейчас настроен на источник 192.168.45.108:9200
+     user: admin
+     password: admin
+
+Приложил коллекцию postman c примерами запросов :
+https://www.postman.com/alexizum/workspace/otus-exercise-microservice-alex-izum/collection/30113005-1994f204-097b-4c9b-9213-f7ddd6c101df?action=share&creator=30113005
+
+Приложил dashboard проекта для Grafana    

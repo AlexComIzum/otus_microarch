@@ -1,0 +1,20 @@
+container:
+  image: sergey789/message:v1.0
+  
+replicaCount: 1  
+
+server:
+  port: 8087
+    
+db: 
+  url: jdbc:postgresql://bdmessage-postgresql.message-ns:5432/postgres
+  
+port:
+  name: message-port  
+  
+app:
+  namespace: message-ns
+ 
+
+ 
+

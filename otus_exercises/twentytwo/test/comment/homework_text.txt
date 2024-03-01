@@ -1,0 +1,46 @@
+Добрый день.
+
+Приложил домашнюю работу.
+
+а) Инструментировал сервис exuser метриками с помощью spring boot и подключением с соответствующих dependencies. Настройки метрик выведены в тип Config-Map.
+б) Сделал дашборд в Графане, в котором метрики разбиты по API методам. Приложил файл Common_homework.json - дашборд по домашнему заданию.
+   Графики в дашборд:
+   1) Latency (response time) с квантилями по 0.5, 0.95, 0.99, max - Row дашборда Latency by HTTP methods. 
+      прикрепил скрин Latency_by_HTTP_method.jpg
+   2) RPS - Row дашборда RPS by API methods
+      прикрепил скрин RPS_by_API_method.jpg
+   3) Error Rate - количество 500ых ответов - Row дашборда Error Rate
+      прикрепил скрин nginx_ingr_controller_Error_Rate.jpg(по API методам и nginx-ingress-controller)
+в) Добавил в дашборд графики с метриками в целом по сервису, взятые с nginx-ingress-controller.
+   Приложил скрин nginx_ingr_controller_Error_Rate.jpg
+   Графики в дашборд:
+   1) Latency (response time) с квантилями по 0.5, 0.95, 0.99, max - Row дашборда Latency and RPS from nginx-ingress-controller      
+   2) RPS - Row дашборда Latency and RPS from nginx-ingress-controller  
+   3) Error Rate - количество 500ых ответов - Row дашборда Error Rate
+г) Настроил алертинг на панелях в ROW Error Rate, Latency by HTTP method, Latency and RPS from ngшnx-ingress-controller
+д) Сделал задание со звездочкой - 
+   1) добавил графики с метриками потребление подами приложения памяти и CPU
+      Row дашборда System  
+      прикрепил скрин CPU_Memory_by_pod.jpg
+   2) установил экспортер postgres-exporter для prometheus 
+      добавил графики с метриками работы БД:
+      Row дашборда PostgreSql BD.   
+      Row дашборда Database Stats. 
+      Прикрепил скрин bd_end.jpg
+
+Команды:
+   а) установка ingress-nginx
+      helm install ingress-nginx ingress-nginx --repo https://kubernetes.github.io/ingress-nginx 
+   б) установка prometheus
+      helm install stack prometheus-community/kube-prometheus-stack -f .\prometheus\prometheus.yaml	
+   в) Установка базы данных(команда установки БД из helm, вместе с файлом values.yaml). 
+      В папке postgre_value лежит файл values.yaml с переопределенными значениями для БД postgresql:
+      helm install psgqlbd bitnami/postgresql -f ./postgre_value/values.yaml
+   г) Развертывание job для миграции базы данных(команда применения первоначальных миграций):
+      helm install pgjob ./job_chart_db
+   д) Развертывание приложения RESTful CRUD по созданию, удалению, просмотру и обновлению пользователей
+      helm install exuser ./exuzer_chart_app
+   е) Обновление ingress-nginx для отправки метрик в prometheus
+      helm upgrade ingress-nginx ingress-nginx/ingress-nginx --set controller.metrics.enabled=true --set controller.metrics.serviceMonitor.enabled=true --set controller.metrics.serviceMonitor.additionalLabels.release="stack"
+   ж) Установка экспортера postgres-exporter
+      helm install pgexporter prometheus-community/prometheus-postgres-exporter -f .\prometheus_postgres_exporter\secret_postgresql_exporter.yaml -f .\prometheus_postgres_exporter\values.yaml      

@@ -1,0 +1,42 @@
+команды:
+
+kubectl create namespace ingress-ns && helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx/ && helm repo update && helm install nginx ingress-nginx/ingress-nginx --namespace ingress-ns -f nginx-ingress.yaml 
+
+kubectl create namespace ingress-ns
+helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx/ 
+helm repo update 
+helm install nginx ingress-nginx/ingress-nginx --namespace ingress-ns -f ./ingress/nginx_ingress.yaml 
+
+  а) kubectl create namespace ingress-ns 
+ б) helm install nginx ingress-nginx/ingress-nginx --namespace ingress-ns -f ./ingress/nginx-ingress.yaml 
+ в) kubectl create namespace message-ns
+ г) Установка базы данных для сервиса message(команда установки БД из helm, вместе с файлом values.yaml). 
+    В директории postgre_message_value лежит файл values.yaml с переопределенными значениями для БД postgresql:
+    helm install bdmessage bitnami/postgresql -f ./postgre_message_value/values.yaml --namespace message-ns
+ д) Развертывание job для миграции базы данных(команда применения первоначальных миграций):
+    helm install jobmessage ./job_message_db
+    Миграция осуществляется в БД bdmessage. С БД bdmessage взаимодействует сервис messagews.
+ е) Развертывание приложения messagews. Назначение сервиса: регистрация сообщений на создание и обновление заказов.   
+    helm install messagews ./message
+ ж) kubectl create namespace order-ns 
+ з) Установка базы данных для сервиса по созданию, обновлению и получению заказов(команда установки БД из helm, вместе с файлом values.yaml). 
+    В директории postgre_order_value лежит файл values.yaml с переопределенными значениями для БД postgresql.      
+    helm install bdorder bitnami/postgresql -f ./postgre_order_value/values.yaml --namespace order-ns
+ и) Развертывание job для миграции базы данных(команда применения первоначальных миграций):
+    helm install joborder ./job_order_db
+    Миграция осуществляется в БД bdorder. С БД bdorder взаимодействует сервис orderws.
+ к) Развертывание приложения orderws:
+    helm install orderws ./order. 
+  
+Для настройки nginх
+
+конфигуратор nginх находится в chart-е order и имеет тот же namespace
+
+взять ip адресс сервиса nginx-ingress-nginx-controller(CLUSTER-IP) и сопоставить(прописать) в файле с host c доменным именем arch.homework
+
+kubectl get pod --namespace message-ns
+
+Запуск тестов:
+newman run .\Exercise_Authorization.postman_collection.json
+
+В заголовке запроса(Header Authorization) должен быть JWT токен

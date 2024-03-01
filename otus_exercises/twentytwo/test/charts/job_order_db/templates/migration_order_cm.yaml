@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-order-configmap
+  namespace: {{ .Values.app.namespace }}
+
+data:  
+  db_url: {{ .Values.db.url }}       
+
+  V1_1__create_table.sql: |     
+    CREATE TABLE public.order (
+    id bigint NOT NULL,
+    userid bigint NOT NULL,
+    price double precision,
+    status character varying(12),
+    number integer NOT NULL,
+    version text
+    );
+
+  V1_2__alter_table.sql: |    
+    ALTER TABLE IF EXISTS public.order
+      OWNER to ${username};
+        
+  V1_3__drop_sequence_table.sql: |       
+    DROP SEQUENCE IF EXISTS public.order_id_seq;  
+      
+  V1_4__create_seq.sql: |        
+    CREATE SEQUENCE IF NOT EXISTS public.order_id_seq
+      INCREMENT 1
+      START 1
+      MINVALUE 1
+      MAXVALUE 9223372036854775807
+     CACHE 1; 
+  V1_5__alter_seq.sql: |    
+    ALTER SEQUENCE public.order_id_seq
+    OWNER TO ${username};       
+  
+  V1_6__alter_seq.sql: |    
+    ALTER TABLE ONLY public.order
+    ADD CONSTRAINT order_pkey PRIMARY KEY (id);
+
+
+
+  
+  

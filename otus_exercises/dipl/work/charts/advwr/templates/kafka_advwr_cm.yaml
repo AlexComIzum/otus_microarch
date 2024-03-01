@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:  
+  name: kafkaadvwr-cm
+  namespace: {{ .Values.app.namespace }}
+data: 
+  advwr.consumer.kafka.topic: {{ .Values.kafka.consumer.topic }} 
+  advwr.consumer.kafka.url: {{ .Values.kafka.consumer.url }}
+  advwr.consumer.kafka.group.id: {{ .Values.kafka.consumer.group.id }}
+  advwr.consumer.kafka.partition: "{{ .Values.kafka.consumer.partition }}"
+  advwr.consumer.kafka.auto.offset.reset: "earliest" 
+  advwr.consumer.kafka.enable.auto.commit: "false" 
+  advwr.consumer.kafka.max.poll.interval.ms: "172800000"
+  advwr.consumer.kafka.max.poll.records: "3"
+  advwr.consumer.kafka.default.api.timeout.ms: "172800000"
+  
+ 
+  
+  

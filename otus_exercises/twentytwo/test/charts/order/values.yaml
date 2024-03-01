@@ -1,25 +1,27 @@
 container:
-  image: sergey789/advwr:v1.0
+  image: sergey789/order:v1.0
   
 replicaCount: 1  
 
 server:
-  port:
-    advwr: 8085
+  port: 8085
     
 db:
   url: jdbc:postgresql://bdorder-postgresql.order-ns:5434/postgres
   
 port:
-  name:
-    advwr: advwr-port    
+  name: order-port    
   
 app:
-  namespace: advwr-ns
+  namespace: order-ns
   
 ingress:
   namespace: ingress-ns
-
+ 
+serive:
+  message:
+    url: messagews.message-ns.svc.cluster.local
+    port: 80
 
  
 

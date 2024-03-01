@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:  
+  name: kafka-cm
+  namespace: {{ .Values.app.namespace }}
+data: 
+  payment.consumer.payment.kafka.topic: {{ .Values.kafka.consumer.payment.topic }} 
+  payment.consumer.payment.kafka.url: {{ .Values.kafka.consumer.payment.url }}
+  payment.consumer.payment.kafka.group.id: {{ .Values.kafka.consumer.payment.group.id }}
+  payment.consumer.payment.kafka.partition: "{{ .Values.kafka.consumer.payment.partition }}"
+  payment.consumer.payment.kafka.auto.offset.reset: "earliest" 
+  payment.consumer.payment.kafka.enable.auto.commit: "false" 
+  payment.consumer.payment.kafka.max.poll.interval.ms: "172800000"
+  payment.consumer.payment.kafka.max.poll.records: "3"
+  payment.consumer.payment.kafka.default.api.timeout.ms: "172800000"
+  payment.producer.notifier.kafka.topic: {{ .Values.kafka.producer.notifier.topic }} 
+  payment.producer.notifier.kafka.url: {{ .Values.kafka.producer.notifier.url }}
+  payment.producer.notifier.kafka.group.id: {{ .Values.kafka.producer.notifier.group.id }}
+  payment.producer.notifier.kafka.partition: "{{ .Values.kafka.producer.notifier.partition }}"
+  payment.producer.paymentrs.kafka.topic: {{ .Values.kafka.producer.paymentrs.topic }} 
+  payment.producer.paymentrs.kafka.url: {{ .Values.kafka.producer.paymentrs.url }}
+  payment.producer.paymentrs.kafka.group.id: {{ .Values.kafka.producer.paymentrs.group.id }}
+  payment.producer.paymentrs.kafka.partition: "{{ .Values.kafka.producer.paymentrs.partition }}"
+  
+  
+ 
+  
+  

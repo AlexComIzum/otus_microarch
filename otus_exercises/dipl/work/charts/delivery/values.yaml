@@ -1,0 +1,45 @@
+container:
+  image: sergey789/delivery:v2.0
+  
+replicaCount: 1  
+
+server:
+  port: 8085
+    
+db:
+  url: jdbc:postgresql://bdferm-postgresql.ferm-ns:5434/postgres
+  
+port:
+  name: delivery-port    
+  
+app:
+  namespace: delivery-ns
+  
+ingress:
+  namespace: ingress-ns
+ 
+
+kafka:
+  consumer:
+    topic: delivery
+    url: 192.168.45.108:9092
+    group:
+      id: group
+    partition: 0
+  producer:
+    topic: deliveryrs
+    url: 192.168.45.108:9092
+    group:
+      id: group
+    partition: 0  
+
+log:
+  msg:
+    length: "30"
+    
+externalservices:
+  kafka:
+    ip: 192.168.45.108
+    port: 9092    
+
+

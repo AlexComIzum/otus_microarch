@@ -1,0 +1,42 @@
+container:
+  image: sergey789/advwr:v2
+  
+replicaCount: 1  
+
+server:
+  port: 8082
+    
+db:
+  url: jdbc:postgresql://bdferm-postgresql.ferm-ns:5434/postgres
+  
+port:
+  name: ardvr-port    
+  
+app:
+  namespace: advwr-ns
+  
+ingress:
+  namespace: advwr-ns
+  
+kafka:
+  consumer:
+    topic: advstatusin
+    url: 192.168.45.108:9092
+    group:
+      id: group
+    partition: 0
+
+log:
+  msg:
+    length: "30"
+    
+externalservices:
+  kafka:
+    ip: 192.168.45.108
+    port: 9092
+
+
+ 
+
+ 
+

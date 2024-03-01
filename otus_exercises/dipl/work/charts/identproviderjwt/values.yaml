@@ -1,0 +1,21 @@
+container:
+  image: sergey789/idenprovjwt:v5.1
+  
+replicaCount: 1  
+
+server:
+  port: 8000
+    
+db:
+  url: jdbc:postgresql://bdferm-postgresql.ferm-ns:5434/postgres
+  
+port:
+  name: user-port  
+  
+secret:
+  jwt: jwtsecret
+  
+app:
+  namespace: authprovider 
+ 
+

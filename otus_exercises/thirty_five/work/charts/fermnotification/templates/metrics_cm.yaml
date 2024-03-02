@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fermnotifmetrics-cm   
+  namespace: {{ .Values.app.namespace }}  
+data:   
+  management.security.enabled: "false"
+  management.endpoint.health.show-details: "always"
+  management.metrics.distribution.slo.http.server.requests: "10ms,50ms,100ms,200ms,300ms,400ms,500ms,800ms,1000ms,2000ms,3000ms,4000ms"
+  management.metrics.export.prometheus.enabled: "true"
+  management.endpoints.web.exposure.include: "*"
+  management.metrics.distribution.percentiles-histogram.http.server.requests: "true"
+ 
+  
+  

@@ -1,0 +1,231 @@
+apiVersion : apps/v1
+kind : Deployment
+metadata:
+    name: {{ .Release.Name }}
+    namespace: {{ .Values.app.namespace }}
+    labels:
+       app: {{ .Release.Name }}-ex-dep      
+spec:
+    replicas: {{ .Values.replicaCount }}
+    selector:
+        matchLabels:
+            app: {{ .Release.Name }}
+    template:
+        metadata:
+            labels:
+                app: {{ .Release.Name }}
+        spec:
+            containers:
+              - name : {{ .Release.Name }}-dep
+                image: {{ .Values.container.image }}                              
+                ports:
+                  - containerPort: {{ .Values.server.port }}        
+                env:    
+
+                - name: logging.config
+                  valueFrom:
+                    configMapKeyRef:
+                      name: log-advwr-cm  
+                      key: pathlogfile     
+                 
+                - name: server.port
+                  value: "{{ .Values.server.port }}"
+                      
+                - name: db_dialect
+                  valueFrom:
+                    configMapKeyRef:
+                      name: dbadvwr-cm  
+                      key: db_dialect       
+                      
+                - name: db_driver_class
+                  valueFrom:
+                    configMapKeyRef:
+                      name: dbadvwr-cm  
+                      key: db_driver_class       
+                      
+                - name: db_provider_class
+                  valueFrom:
+                    configMapKeyRef:
+                      name: dbadvwr-cm  
+                      key: db_provider_class   
+                
+                - name: db_url
+                  valueFrom:
+                    configMapKeyRef:
+                      name: dbadvwr-cm  
+                      key: db_url
+                
+                - name: db_username
+                  valueFrom:                    
+                    secretKeyRef:
+                      name: advwr-secret
+                      key: username                      
+                
+                - name: db_password
+                  valueFrom:                    
+                    secretKeyRef:
+                      name: advwr-secret
+                      key: password
+                
+                - name: db_current_session_context_class
+                  valueFrom:
+                    configMapKeyRef:
+                      name: dbadvwr-cm  
+                      key: db_current_session_context_class            
+                
+                - name: db_timeout
+                  valueFrom:
+                    configMapKeyRef:
+                      name: dbadvwr-cm  
+                      key: db_timeout
+                
+                - name: db_acquireRetryAttempts
+                  valueFrom:
+                    configMapKeyRef:
+                      name: dbadvwr-cm  
+                      key: db_acquireRetryAttempts            
+                
+                - name: db_acquireRetryDelay
+                  valueFrom:
+                    configMapKeyRef:
+                      name: dbadvwr-cm  
+                      key: db_acquireRetryDelay
+                
+                - name: db_breakAfterAcquireFailure
+                  valueFrom:
+                    configMapKeyRef:
+                      name: dbadvwr-cm  
+                      key: db_breakAfterAcquireFailure            
+                
+                - name: db_maxConnectionAge
+                  valueFrom:
+                    configMapKeyRef:
+                      name: dbadvwr-cm  
+                      key: db_maxConnectionAge
+                
+                - name: db_maxIdleTime
+                  valueFrom:
+                    configMapKeyRef:
+                      name: dbadvwr-cm  
+                      key: db_maxIdleTime           
+                
+                - name: db_maxIdleTimeExcessConnections
+                  valueFrom:
+                    configMapKeyRef:
+                      name: dbadvwr-cm  
+                      key: db_maxIdleTimeExcessConnections
+                
+                - name: db_idleConnectionTestPeriod
+                  valueFrom:
+                    configMapKeyRef:
+                      name: dbadvwr-cm  
+                      key: db_idleConnectionTestPeriod
+                  
+                - name: management.security.enabled
+                  valueFrom:
+                    configMapKeyRef:
+                      name: advwrmetrics-cm  
+                      key: management.security.enabled
+                
+                - name: management.endpoint.health.show-details
+                  valueFrom:
+                    configMapKeyRef:
+                      name: advwrmetrics-cm  
+                      key: management.endpoint.health.show-details
+                
+                - name: management.metrics.distribution.slo.http.server.requests
+                  valueFrom:
+                    configMapKeyRef:
+                      name: advwrmetrics-cm  
+                      key: management.metrics.distribution.slo.http.server.requests
+                
+                - name: management.metrics.export.prometheus.enabled
+                  valueFrom:
+                    configMapKeyRef:
+                      name: advwrmetrics-cm  
+                      key: management.metrics.export.prometheus.enabled
+                
+                - name: management.endpoints.web.exposure.include
+                  valueFrom:
+                    configMapKeyRef:
+                      name: advwrmetrics-cm  
+                      key: management.endpoints.web.exposure.include
+                
+                - name: management.metrics.distribution.percentiles-histogram.http.server.requests
+                  valueFrom:
+                    configMapKeyRef:
+                      name: advwrmetrics-cm 
+                      key: management.metrics.distribution.percentiles-histogram.http.server.requests    
+                      
+                - name: advwr.consumer.kafka.topic
+                  valueFrom:
+                    configMapKeyRef:
+                      name: kafkaadvwr-cm
+                      key: advwr.consumer.kafka.topic
+
+                - name: advwr.consumer.kafka.url
+                  valueFrom:
+                    configMapKeyRef:
+                      name: kafkaadvwr-cm
+                      key: advwr.consumer.kafka.url
+
+                - name: advwr.consumer.kafka.group.id
+                  valueFrom:
+                    configMapKeyRef:
+                      name: kafkaadvwr-cm
+                      key: advwr.consumer.kafka.group.id
+
+                - name: advwr.consumer.kafka.partition
+                  valueFrom:
+                    configMapKeyRef:
+                      name: kafkaadvwr-cm
+                      key: advwr.consumer.kafka.partition
+
+                - name: advwr.consumer.kafka.auto.offset.reset
+                  valueFrom:
+                    configMapKeyRef:
+                      name: kafkaadvwr-cm
+                      key: advwr.consumer.kafka.auto.offset.reset
+
+                - name: advwr.consumer.kafka.enable.auto.commit
+                  valueFrom:
+                    configMapKeyRef:
+                      name: kafkaadvwr-cm
+                      key: advwr.consumer.kafka.enable.auto.commit
+
+                - name: advwr.consumer.kafka.max.poll.interval.ms
+                  valueFrom:
+                    configMapKeyRef:
+                      name: kafkaadvwr-cm
+                      key: advwr.consumer.kafka.max.poll.interval.ms
+
+                - name: advwr.consumer.kafka.max.poll.records
+                  valueFrom:
+                    configMapKeyRef:
+                      name: kafkaadvwr-cm
+                      key: advwr.consumer.kafka.max.poll.records
+
+                - name: advwr.consumer.kafka.default.api.timeout.ms
+                  valueFrom:
+                    configMapKeyRef:
+                      name: kafkaadvwr-cm
+                      key: advwr.consumer.kafka.default.api.timeout.ms                      
+
+                - name: advwr.log.msg.length
+                  value: "{{ .Values.log.msg.length }}"                     
+                 
+                volumeMounts:
+                - name: logforjconfig
+                  mountPath: "/usr/local/service/config"
+                  readOnly: true            
+                
+            volumes:
+              - name: logforjconfig
+                configMap:
+                  name: log-advwr-cm
+                  items:
+                  - key: "loggerconfig"    
+                    path: "log4j2.properties"        
+            
+  
+               

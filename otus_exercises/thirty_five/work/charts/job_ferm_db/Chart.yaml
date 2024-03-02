@@ -1,0 +1,17 @@
+apiVersion: v1
+name: ferm
+description: dipl
+type: application
+version: 0.0.1
+appVersion: "3.0.0"
+
+keywords:
+  - kubernetes
+  - ingress
+  - helm
+  - flyway migration
+  - job
+  
+maintainers:
+  - name: AlexIvanov
+  

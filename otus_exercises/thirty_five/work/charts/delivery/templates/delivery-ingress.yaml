@@ -1,0 +1,65 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: delivery
+  namespace: {{ .Values.app.namespace }}
+  annotations:
+    nginx.ingress.kubernetes.io/auth-url: "http://identprov.authprovider.svc.cluster.local:80/authenticate"
+    nginx.ingress.kubernetes.io/auth-signin: "http://$host/signin"
+    nginx.ingress.kubernetes.io/auth-response-headers: "X-User,X-Email,X-First-Name,Authorization"
+spec:
+  rules:  
+   - host: arch.homework  
+     http:   
+      paths:   
+      - path: /appointcourier
+        pathType: Prefix
+        backend:   
+          service:   
+            name: delivery            
+            port:   
+              number: 80
+      - path: /courier
+        pathType: Prefix
+        backend:   
+          service:   
+            name: delivery            
+            port:   
+              number: 80
+      - path: /delivery
+        pathType: Prefix
+        backend:   
+          service:   
+            name: delivery            
+            port:   
+              number: 80
+      - path: /couriers
+        pathType: Prefix
+        backend:   
+          service:   
+            name: delivery            
+            port:   
+              number: 80
+      - path: /deliverybynumber
+        pathType: Prefix
+        backend:   
+          service:   
+            name: delivery            
+            port:   
+              number: 80
+      - path: /deliverybyordernumber
+        pathType: Prefix
+        backend:   
+          service:   
+            name: delivery            
+            port:   
+              number: 80
+      - path: /deliverystatus
+        pathType: Prefix
+        backend:   
+          service:   
+            name: delivery            
+            port:   
+              number: 80
+              
+              

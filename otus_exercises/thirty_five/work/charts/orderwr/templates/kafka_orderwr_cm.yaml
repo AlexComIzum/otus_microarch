@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:  
+  name: kafka-cm
+  namespace: {{ .Values.app.namespace }}
+data: 
+  orderwr.consumer.deliveryrs.kafka.topic: {{ .Values.kafka.consumer.deliveryrs.topic }} 
+  orderwr.consumer.deliveryrs.kafka.url: {{ .Values.kafka.consumer.deliveryrs.url }}
+  orderwr.consumer.deliveryrs.kafka.group.id: {{ .Values.kafka.consumer.deliveryrs.group.id }}
+  orderwr.consumer.deliveryrs.kafka.partition: "{{ .Values.kafka.consumer.deliveryrs.partition }}"
+  orderwr.consumer.deliveryrs.kafka.auto.offset.reset: "earliest" 
+  orderwr.consumer.deliveryrs.kafka.enable.auto.commit: "false" 
+  orderwr.consumer.deliveryrs.kafka.max.poll.interval.ms: "172800000"
+  orderwr.consumer.deliveryrs.kafka.max.poll.records: "3"
+  orderwr.consumer.deliveryrs.kafka.default.api.timeout.ms: "172800000"
+  orderwr.consumer.paymentrs.kafka.topic: {{ .Values.kafka.consumer.paymentrs.topic }} 
+  orderwr.consumer.paymentrs.kafka.url: {{ .Values.kafka.consumer.paymentrs.url }}
+  orderwr.consumer.paymentrs.kafka.group.id: {{ .Values.kafka.consumer.paymentrs.group.id }}
+  orderwr.consumer.paymentrs.kafka.partition: "{{ .Values.kafka.consumer.paymentrs.partition }}"
+  orderwr.consumer.paymentrs.kafka.auto.offset.reset: "earliest" 
+  orderwr.consumer.paymentrs.kafka.enable.auto.commit: "false" 
+  orderwr.consumer.paymentrs.kafka.max.poll.interval.ms: "172800000"
+  orderwr.consumer.paymentrs.kafka.max.poll.records: "3"
+  orderwr.consumer.paymentrs.kafka.default.api.timeout.ms: "172800000"
+  orderwr.producer.delivery.kafka.topic: {{ .Values.kafka.producer.delivery.topic }} 
+  orderwr.producer.delivery.kafka.url: {{ .Values.kafka.producer.delivery.url }}
+  orderwr.producer.delivery.kafka.group.id: {{ .Values.kafka.producer.delivery.group.id }}
+  orderwr.producer.delivery.kafka.partition: "{{ .Values.kafka.producer.delivery.partition }}"
+  orderwr.producer.payment.kafka.topic: {{ .Values.kafka.producer.payment.topic }} 
+  orderwr.producer.payment.kafka.url: {{ .Values.kafka.producer.payment.url }}
+  orderwr.producer.payment.kafka.group.id: {{ .Values.kafka.producer.payment.group.id }}
+  orderwr.producer.payment.kafka.partition: "{{ .Values.kafka.producer.payment.partition }}"
+  orderwr.producer.advstatus.kafka.topic: {{ .Values.kafka.producer.advstatus.topic }} 
+  orderwr.producer.advstatus.kafka.url: {{ .Values.kafka.producer.advstatus.url }}
+  orderwr.producer.advstatus.kafka.group.id: {{ .Values.kafka.producer.advstatus.group.id }}
+  orderwr.producer.advstatus.kafka.partition: "{{ .Values.kafka.producer.advstatus.partition }}"
+   
+  
+  
+ 
+  
+  

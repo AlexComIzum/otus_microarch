@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:  
+  name: kafka-cm
+  namespace: {{ .Values.app.namespace }}
+data: 
+  delivery.consumer.kafka.topic: {{ .Values.kafka.consumer.topic }} 
+  delivery.consumer.kafka.url: {{ .Values.kafka.consumer.url }}
+  delivery.consumer.kafka.group.id: {{ .Values.kafka.consumer.group.id }}
+  delivery.consumer.kafka.partition: "{{ .Values.kafka.consumer.partition }}"
+  delivery.consumer.kafka.auto.offset.reset: "earliest" 
+  delivery.consumer.kafka.enable.auto.commit: "false" 
+  delivery.consumer.kafka.max.poll.interval.ms: "172800000"
+  delivery.consumer.kafka.max.poll.records: "3"
+  delivery.consumer.kafka.default.api.timeout.ms: "172800000"
+  delivery.producer.kafka.topic: {{ .Values.kafka.producer.topic }} 
+  delivery.producer.kafka.url: {{ .Values.kafka.producer.url }}
+  delivery.producer.kafka.group.id: {{ .Values.kafka.producer.group.id }}
+  delivery.producer.kafka.partition: "{{ .Values.kafka.producer.partition }}"
+  
+  
+ 
+  
+  

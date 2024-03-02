@@ -41,4 +41,5 @@ II) 1) minikube addons enable ingress  либо  helm install nginx ingress-ngin
 https://www.postman.com/alexizum/workspace/otus-exercise-microservice-alex-izum/collection/30113005-1994f204-097b-4c9b-9213-f7ddd6c101df?action=share&creator=30113005
 и файл Ferm.postman_collection.json
 
-В файле Saga_30_work.docx описана схема работы микросервисов и как работает Saga. Saga запускатся в момент, когда отправляется запрос "Подтверждение заказа"
+В файле work_35.docx описана схема взаимодействия микросервисов, sequence diagramm c API.
+В файле result_test.jpg представлены результаты тестов, проведенных с помощью команды newman.

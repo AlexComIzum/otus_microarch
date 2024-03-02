@@ -1,0 +1,257 @@
+apiVersion : apps/v1
+kind : Deployment
+metadata:
+    name: {{ .Release.Name }}
+    namespace: {{ .Values.app.namespace }}
+    labels:
+       app: {{ .Release.Name }}-ex-dep      
+spec:
+    replicas: {{ .Values.replicaCount }}
+    selector:
+        matchLabels:
+            app: {{ .Release.Name }}
+    template:
+        metadata:
+            labels:
+                app: {{ .Release.Name }}
+        spec:
+            containers:
+              - name : {{ .Release.Name }}-dep
+                image: {{ .Values.container.image }}                              
+                ports:
+                  - containerPort: {{ .Values.server.port }}        
+                env:               
+                
+                - name: logging.config
+                  valueFrom:
+                    configMapKeyRef:
+                      name: log-delivery-cm  
+                      key: pathlogfile                
+                
+                - name: server.port
+                  value: "{{ .Values.server.port }}"
+                      
+                - name: db_dialect
+                  valueFrom:
+                    configMapKeyRef:
+                      name: dbset-cm  
+                      key: db_dialect       
+                      
+                - name: db_driver_class
+                  valueFrom:
+                    configMapKeyRef:
+                      name: dbset-cm  
+                      key: db_driver_class       
+                      
+                - name: db_provider_class
+                  valueFrom:
+                    configMapKeyRef:
+                      name: dbset-cm  
+                      key: db_provider_class   
+                
+                - name: db_url
+                  valueFrom:
+                    configMapKeyRef:
+                      name: dbset-cm  
+                      key: db_url
+                
+                - name: db_username
+                  valueFrom:                    
+                    secretKeyRef:
+                      name: delivery-secret
+                      key: username                      
+                
+                - name: db_password
+                  valueFrom:                    
+                    secretKeyRef:
+                      name: delivery-secret
+                      key: password
+                
+                - name: db_current_session_context_class
+                  valueFrom:
+                    configMapKeyRef:
+                      name: dbset-cm  
+                      key: db_current_session_context_class            
+                
+                - name: db_timeout
+                  valueFrom:
+                    configMapKeyRef:
+                      name: dbset-cm  
+                      key: db_timeout
+                
+                - name: db_acquireRetryAttempts
+                  valueFrom:
+                    configMapKeyRef:
+                      name: dbset-cm  
+                      key: db_acquireRetryAttempts            
+                
+                - name: db_acquireRetryDelay
+                  valueFrom:
+                    configMapKeyRef:
+                      name: dbset-cm  
+                      key: db_acquireRetryDelay
+                
+                - name: db_breakAfterAcquireFailure
+                  valueFrom:
+                    configMapKeyRef:
+                      name: dbset-cm  
+                      key: db_breakAfterAcquireFailure            
+                
+                - name: db_maxConnectionAge
+                  valueFrom:
+                    configMapKeyRef:
+                      name: dbset-cm  
+                      key: db_maxConnectionAge
+                
+                - name: db_maxIdleTime
+                  valueFrom:
+                    configMapKeyRef:
+                      name: dbset-cm  
+                      key: db_maxIdleTime           
+                
+                - name: db_maxIdleTimeExcessConnections
+                  valueFrom:
+                    configMapKeyRef:
+                      name: dbset-cm  
+                      key: db_maxIdleTimeExcessConnections
+                
+                - name: db_idleConnectionTestPeriod
+                  valueFrom:
+                    configMapKeyRef:
+                      name: dbset-cm  
+                      key: db_idleConnectionTestPeriod    
+                      
+                - name: management.security.enabled
+                  valueFrom:
+                    configMapKeyRef:
+                      name: deliverymetrics-cm  
+                      key: management.security.enabled
+                
+                - name: management.endpoint.health.show-details
+                  valueFrom:
+                    configMapKeyRef:
+                      name: deliverymetrics-cm  
+                      key: management.endpoint.health.show-details
+                
+                - name: management.metrics.distribution.slo.http.server.requests
+                  valueFrom:
+                    configMapKeyRef:
+                      name: deliverymetrics-cm  
+                      key: management.metrics.distribution.slo.http.server.requests
+                
+                - name: management.metrics.export.prometheus.enabled
+                  valueFrom:
+                    configMapKeyRef:
+                      name: deliverymetrics-cm  
+                      key: management.metrics.export.prometheus.enabled
+                
+                - name: management.endpoints.web.exposure.include
+                  valueFrom:
+                    configMapKeyRef:
+                      name: deliverymetrics-cm  
+                      key: management.endpoints.web.exposure.include
+                
+                - name: management.metrics.distribution.percentiles-histogram.http.server.requests
+                  valueFrom:
+                    configMapKeyRef:
+                      name: deliverymetrics-cm 
+                      key: management.metrics.distribution.percentiles-histogram.http.server.requests    
+                      
+                - name: delivery.consumer.kafka.topic
+                  valueFrom:
+                    configMapKeyRef:
+                      name: kafka-cm
+                      key: delivery.consumer.kafka.topic
+
+                - name: delivery.consumer.kafka.url
+                  valueFrom:
+                    configMapKeyRef:
+                      name: kafka-cm
+                      key: delivery.consumer.kafka.url
+
+                - name: delivery.consumer.kafka.group.id
+                  valueFrom:
+                    configMapKeyRef:
+                      name: kafka-cm
+                      key: delivery.consumer.kafka.group.id
+
+                - name: delivery.consumer.kafka.partition
+                  valueFrom:
+                    configMapKeyRef:
+                      name: kafka-cm
+                      key: delivery.consumer.kafka.partition
+
+                - name: delivery.consumer.kafka.auto.offset.reset
+                  valueFrom:
+                    configMapKeyRef:
+                      name: kafka-cm
+                      key: delivery.consumer.kafka.auto.offset.reset
+
+                - name: delivery.consumer.kafka.enable.auto.commit
+                  valueFrom:
+                    configMapKeyRef:
+                      name: kafka-cm
+                      key: delivery.consumer.kafka.enable.auto.commit
+
+                - name: delivery.consumer.kafka.max.poll.interval.ms
+                  valueFrom:
+                    configMapKeyRef:
+                      name: kafka-cm
+                      key: delivery.consumer.kafka.max.poll.interval.ms
+
+                - name: delivery.consumer.kafka.max.poll.records
+                  valueFrom:
+                    configMapKeyRef:
+                      name: kafka-cm
+                      key: delivery.consumer.kafka.max.poll.records
+
+                - name: delivery.consumer.kafka.default.api.timeout.ms
+                  valueFrom:
+                    configMapKeyRef:
+                      name: kafka-cm
+                      key: delivery.consumer.kafka.default.api.timeout.ms        
+
+                - name: delivery.producer.kafka.topic
+                  valueFrom:
+                    configMapKeyRef:
+                      name: kafka-cm
+                      key: delivery.producer.kafka.topic
+
+                - name: delivery.producer.kafka.url
+                  valueFrom:
+                    configMapKeyRef:
+                      name: kafka-cm
+                      key: delivery.producer.kafka.url
+
+                - name: delivery.producer.kafka.group.id
+                  valueFrom:
+                    configMapKeyRef:
+                      name: kafka-cm
+                      key: delivery.producer.kafka.group.id
+
+                - name: delivery.producer.kafka.partition
+                  valueFrom:
+                    configMapKeyRef:
+                      name: kafka-cm
+                      key: delivery.producer.kafka.partition                      
+
+                - name: delivery.log.msg.length
+                  value: "{{ .Values.log.msg.length }}"   
+ 
+                volumeMounts:
+                - name: logforjconfig
+                  mountPath: "/usr/local/service/config"
+                  readOnly: true            
+                
+            volumes:
+              - name: logforjconfig
+                configMap:
+                  name: log-delivery-cm
+                  items:
+                  - key: "loggerconfig"    
+                    path: "log4j2.properties"        
+
+
+                    
+                
+               

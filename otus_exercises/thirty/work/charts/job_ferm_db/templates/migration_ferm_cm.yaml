@@ -1,0 +1,452 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-order-configmap
+  namespace: {{ .Values.app.namespace }}
+
+data:  
+  db_url: {{ .Values.db.url }}    
+
+
+  V1_1__create_table.sql: |     
+    CREATE SCHEMA advwr;  
+
+  V1_2__create_table.sql: |     
+    ALTER SCHEMA advwr OWNER TO ${username};      
+
+  V1_3__create_table.sql: |     
+    CREATE TABLE advwr.advertisement (
+    id bigint NOT NULL,
+    name character varying(50),
+    description text,
+    unitmeasure smallint,
+    quantity double precision,
+    price double precision,
+    date date,
+    status character varying(24),
+    userid bigint,
+    number bigint
+    );
+
+  V1_4__create_table.sql: |     
+    ALTER TABLE advwr.advertisement OWNER TO ${username};   
+
+  V1_5__alter_seq.sql: |    
+    ALTER TABLE ONLY advwr.advertisement
+    ADD CONSTRAINT advertisement_pkey PRIMARY KEY (id);       
+  
+  V1_6__create_seq.sql: |        
+    CREATE SEQUENCE IF NOT EXISTS advwr.advertisement_id_seq
+      INCREMENT 1
+      START 1
+      MINVALUE 1
+      MAXVALUE 9223372036854775807
+     CACHE 1;   
+     
+  V1_7__create_table.sql: |     
+    ALTER SEQUENCE advwr.advertisement_id_seq OWNER TO ${username};
+        
+  V1_8__create_table.sql: |     
+    CREATE TABLE advwr.comment (
+    id bigint NOT NULL,
+    advnumber bigint,
+    text text
+    );   
+    
+  V1_9__create_table.sql: |     
+    ALTER TABLE advwr.comment OWNER TO ${username};
+    
+  V1_10__alter_seq.sql: |    
+    ALTER TABLE ONLY advwr.comment
+    ADD CONSTRAINT comments_pkey PRIMARY KEY (id);       
+    
+  V1_11__create_seq.sql: |        
+    CREATE SEQUENCE IF NOT EXISTS advwr.comment_id_seq
+      INCREMENT 1
+      START 1
+      MINVALUE 1
+      MAXVALUE 9223372036854775807
+     CACHE 1;   
+    
+  V1_12__create_table.sql: |     
+    ALTER SEQUENCE advwr.comment_id_seq OWNER TO ${username};
+    
+  V1_13__create_table.sql: | 
+    CREATE TABLE advwr.message (   
+    id bigint NOT NULL,
+    guid text,
+    request text,
+    response text,
+    issync boolean 
+    );    
+    
+  V1_14__alter_seq.sql: |    
+    ALTER TABLE ONLY advwr.message
+    ADD CONSTRAINT message_pkey PRIMARY KEY (id);       
+    
+  V1_15__create_table.sql: |     
+    ALTER TABLE advwr.message OWNER TO ${username};
+        
+  V1_16__create_seq.sql: |        
+    CREATE SEQUENCE IF NOT EXISTS advwr.message_id_seq 
+      INCREMENT 1
+      START 1
+      MINVALUE 1
+      MAXVALUE 9223372036854775807
+     CACHE 1;  
+    
+  V1_17__create_table.sql: |     
+    ALTER SEQUENCE advwr.message_id_seq OWNER TO ${username};
+    
+## new schema  delivery   
+   
+  V1_18__create_table.sql: |     
+    CREATE SCHEMA delivery;  
+
+  V1_19__create_table.sql: |     
+    ALTER SCHEMA delivery OWNER TO ${username};    
+ 
+## table  delivery.courier   
+ 
+  V1_20__create_table.sql: |     
+    CREATE TABLE delivery.courier (
+    id bigint NOT NULL,
+    name text,
+    surname text,
+    phone character varying(25),
+    deliverytype smallint
+    );
+
+  V1_21__create_table.sql: |     
+    ALTER TABLE delivery.courier OWNER TO ${username};   
+
+  V1_22__alter_seq.sql: |    
+    ALTER TABLE ONLY delivery.courier                            
+    ADD CONSTRAINT courier_pkey PRIMARY KEY (id);        
+  
+  V1_23__create_seq.sql: |        
+    CREATE SEQUENCE delivery.courier_id_seq 
+      INCREMENT 1
+      START 1
+      MINVALUE 1
+      MAXVALUE 9223372036854775807
+     CACHE 1;   
+     
+  V1_24__create_table.sql: |     
+    ALTER SEQUENCE delivery.courier_id_seq OWNER TO ${username};
+    
+## table   delivery.deliverycourier      
+ 
+  V1_25__create_table.sql: |     
+    CREATE TABLE delivery.deliverycourier (
+    id bigint NOT NULL,
+    courierid bigint,
+    deliveryid bigint
+    );
+
+  V1_26__create_table.sql: |     
+    ALTER TABLE delivery.deliverycourier OWNER TO ${username};   
+
+  V1_27__alter_seq.sql: |    
+    ALTER TABLE ONLY delivery.deliverycourier
+    ADD CONSTRAINT deliverycourier_pkey PRIMARY KEY (id);        
+  
+  V1_28__create_seq.sql: |        
+    CREATE SEQUENCE delivery.delivery_courier_id_seq  
+      INCREMENT 1
+      START 1
+      MINVALUE 1
+      MAXVALUE 9223372036854775807
+     CACHE 1;   
+     
+  V1_29__create_table.sql: |     
+    ALTER SEQUENCE delivery.delivery_courier_id_seq  OWNER TO ${username};  
+    
+## table   delivery.deliverylist      
+ 
+  V1_30__create_table.sql: |     
+    CREATE TABLE delivery.deliverylist (
+    id bigint NOT NULL,
+    ordernumber bigint,
+    dateto date,
+    addressto character varying(75),
+    payd boolean,
+    advnumber bigint,
+    addressfrom character varying(75),
+    datefrom date,
+    warehouseid integer,
+    number bigint,
+    status character varying(22) 
+    );
+
+  V1_31__create_table.sql: |     
+    ALTER TABLE delivery.deliverylist OWNER TO ${username};   
+
+  V1_32__alter_seq.sql: |    
+    ALTER TABLE ONLY delivery.deliverylist
+    ADD CONSTRAINT deliverylist_pkey PRIMARY KEY (id);
+  
+  V1_33__create_seq.sql: |        
+    CREATE SEQUENCE delivery.deliverylist_id_seq  
+      INCREMENT 1
+      START 1
+      MINVALUE 1
+      MAXVALUE 9223372036854775807
+     CACHE 1;   
+     
+  V1_34__create_table.sql: |     
+    ALTER SEQUENCE delivery.deliverylist_id_seq  OWNER TO ${username};      
+    
+## table   delivery.message      
+ 
+  V1_35__create_table.sql: |     
+    CREATE TABLE delivery.message (
+    id bigint NOT NULL,
+    guid text,
+    request text,
+    response text,
+    issync boolean  
+    );
+
+  V1_36__create_table.sql: |     
+    ALTER TABLE delivery.message OWNER TO ${username};   
+
+  V1_37__alter_seq.sql: |    
+    ALTER TABLE ONLY delivery.message
+    ADD CONSTRAINT message_pkey PRIMARY KEY (id);
+  
+  V1_38__create_seq.sql: |        
+    CREATE SEQUENCE delivery.message_id_seq  
+      INCREMENT 1
+      START 1
+      MINVALUE 1
+      MAXVALUE 9223372036854775807
+     CACHE 1;   
+     
+  V1_39__create_table.sql: |     
+    ALTER SEQUENCE delivery.message_id_seq  OWNER TO ${username};          
+  
+## new schema  notifier   
+   
+  V1_40__create_table.sql: |     
+    CREATE SCHEMA notifier;  
+
+  V1_41__create_table.sql: |     
+    ALTER SCHEMA notifier OWNER TO ${username};    
+   
+## new schema   notifier.notification      
+ 
+  V1_42__create_table.sql: |     
+    CREATE TABLE notifier.notification (
+    id bigint NOT NULL,
+    text text,
+    email character varying(50),
+    topic character varying(100),
+    tomsg character varying(50),
+    frommsg character varying(50)  
+    );
+
+  V1_43__create_table.sql: |     
+    ALTER TABLE notifier.notification OWNER TO ${username};   
+
+  V1_44__alter_seq.sql: |    
+    ALTER TABLE ONLY notifier.notification
+    ADD CONSTRAINT notification_pkey PRIMARY KEY (id);
+  
+  V1_45__create_seq.sql: |        
+    CREATE SEQUENCE notifier.notification_id_seq  
+      INCREMENT 1
+      START 1
+      MINVALUE 1
+      MAXVALUE 9223372036854775807
+     CACHE 1;   
+     
+  V1_46__create_table.sql: |     
+    ALTER SEQUENCE notifier.notification_id_seq  OWNER TO ${username};        
+    
+## new schema  orderwr   
+   
+  V1_47__create_table.sql: |     
+    CREATE SCHEMA orderwr;  
+
+  V1_48__create_table.sql: |     
+    ALTER SCHEMA orderwr OWNER TO ${username};    
+   
+## new table   orderwr.message      
+ 
+  V1_49__create_table.sql: |     
+    CREATE TABLE orderwr.message (
+    id bigint NOT NULL,
+    guid text,
+    request text,
+    response text,
+    issync boolean   
+    );
+
+  V1_50__create_table.sql: |     
+    ALTER TABLE orderwr.message OWNER TO ${username};   
+
+  V1_51__alter_seq.sql: |    
+    ALTER TABLE ONLY orderwr.message 
+    ADD CONSTRAINT message_pkey PRIMARY KEY (id); 
+  
+  V1_52__create_seq.sql: |        
+    CREATE SEQUENCE orderwr.message_id_seq  
+      INCREMENT 1
+      START 1
+      MINVALUE 1
+      MAXVALUE 9223372036854775807
+     CACHE 1;   
+     
+  V1_53__create_table.sql: |     
+    ALTER SEQUENCE orderwr.message_id_seq  OWNER TO ${username};            
+    
+## new table   orderwr.order      
+ 
+  V1_54__create_table.sql: |     
+    CREATE TABLE orderwr."order" (
+    id bigint NOT NULL,
+    date date,
+    userid bigint,
+    price double precision,
+    quantity double precision,
+    status character varying(24),
+    unitmeasure smallint,
+    number bigint,
+    advnumber bigint,
+    payment text,
+    delivery text    
+    );
+
+  V1_55__create_table.sql: |     
+    ALTER TABLE orderwr."order" OWNER TO ${username};   
+
+  V1_56__alter_seq.sql: |    
+    ALTER TABLE ONLY orderwr."order"
+    ADD CONSTRAINT order_pkey PRIMARY KEY (id); 
+  
+  V1_57__create_seq.sql: |        
+    CREATE SEQUENCE orderwr.order_id_seq   
+      INCREMENT 1
+      START 1
+      MINVALUE 1
+      MAXVALUE 9223372036854775807
+     CACHE 1;   
+     
+  V1_58__create_table.sql: |     
+    ALTER SEQUENCE orderwr.order_id_seq OWNER TO ${username};       
+    
+   
+## new schema  paymentbill   
+   
+  V1_59__create_table.sql: |     
+    CREATE SCHEMA paymentbill;  
+
+  V1_60__create_table.sql: |     
+    ALTER SCHEMA paymentbill OWNER TO ${username};    
+   
+## new table  paymentbill.account      
+ 
+  V1_61__create_table.sql: |     
+    CREATE TABLE paymentbill.account (
+    id bigint NOT NULL,
+    userid bigint,
+    acnumber bigint,
+    summ double precision,
+    version bigint   
+    );
+
+  V1_62__create_table.sql: |     
+    ALTER TABLE paymentbill.account OWNER TO ${username};   
+
+  V1_63__alter_seq.sql: |    
+    ALTER TABLE ONLY paymentbill.account
+    ADD CONSTRAINT account_pkey PRIMARY KEY (id); 
+  
+  V1_64__create_seq.sql: |        
+    CREATE SEQUENCE paymentbill.account_id_seq   
+      INCREMENT 1
+      START 1
+      MINVALUE 1
+      MAXVALUE 9223372036854775807
+     CACHE 1;   
+     
+  V1_65__create_table.sql: |     
+    ALTER SEQUENCE paymentbill.account_id_seq  OWNER TO ${username};            
+      
+## new table  paymentbill.payment      
+ 
+  V1_66__create_table.sql: |     
+    CREATE TABLE paymentbill.payment (
+    id bigint NOT NULL,
+    ordernumber bigint,
+    amount double precision,
+    userid bigint,
+    status character varying(50)   
+    );
+
+  V1_67__create_table.sql: |     
+    ALTER TABLE paymentbill.payment OWNER TO ${username};   
+
+  V1_68__alter_seq.sql: |    
+    ALTER TABLE ONLY paymentbill.payment
+    ADD CONSTRAINT payment_pkey PRIMARY KEY (id); 
+  
+  V1_69__create_seq.sql: |        
+    CREATE SEQUENCE paymentbill.payment_id_seq    
+      INCREMENT 1
+      START 1
+      MINVALUE 1
+      MAXVALUE 9223372036854775807
+     CACHE 1;   
+     
+  V1_70__create_table.sql: |     
+    ALTER SEQUENCE paymentbill.payment_id_seq  OWNER TO ${username};   
+    
+## new schema  paymentbill   
+    
+  V1_71__create_table.sql: |     
+    CREATE TABLE public.authuser (
+      id bigint NOT NULL,
+      username text,
+      firstname text,
+      lastname text,
+      email text,
+      phone text,
+      password text,
+      accountnonexpired boolean,
+      accountnonlocked boolean,
+      credentialsnonexpired boolean,
+      enabled boolean,
+      PRIMARY KEY (id)
+      );
+
+  V1_72__alter_table.sql: |    
+    ALTER TABLE IF EXISTS public.authuser
+      OWNER to ${username};
+  V1_73__drop_sequence_table.sql: |       
+    DROP SEQUENCE IF EXISTS public.authuser_id_seq;  
+      
+  V1_74__create_seq.sql: |        
+    CREATE SEQUENCE IF NOT EXISTS public.authuser_id_seq
+      INCREMENT 1
+      START 1
+      MINVALUE 1
+      MAXVALUE 9223372036854775807
+     CACHE 1; 
+  V1_75__alter_seq.sql: |    
+    ALTER SEQUENCE public.authuser_id_seq
+    OWNER TO ${username};       
+    
+  V1_76__create_table.sql: |     
+    CREATE TABLE public.userprofile (
+      userid bigint NOT NULL,
+      age integer,
+      country text,
+      PRIMARY KEY (userid)
+    );
+
+  V1_77__alter_table.sql: |    
+    ALTER TABLE IF EXISTS public.userprofile
+      OWNER to ${username};
+    

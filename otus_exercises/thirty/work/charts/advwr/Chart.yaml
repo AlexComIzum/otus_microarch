@@ -1,0 +1,19 @@
+apiVersion: v1
+name: Fermer 
+description: diplom
+type: application
+version: 0.0.5
+appVersion: "7.0.0"
+
+keywords:
+  - kubernetes
+  - helm
+  - security
+  - flyway migration
+  - postgresql
+  - job
+  - idempotency
+  
+maintainers:
+  - name: AlexIvanov
+  

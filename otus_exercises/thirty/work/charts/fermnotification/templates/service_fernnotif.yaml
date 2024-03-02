@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: Service
+metadata:
+    name: {{ .Release.Name }}
+    namespace: {{ .Values.app.namespace }}
+    labels:
+        app: {{ .Release.Name }}
+        env : prod
+        owner: AlexIvanov
+spec:
+    selector:
+        app: {{ .Release.Name }}
+    ports:         
+      - name      : {{ .Values.port.name }}
+        protocol  : TCP
+        port      : 80
+        targetPort: {{ .Values.server.port }}   
+ #   externalIPs:
+ #     - 10.97.189.77        
+    type: LoadBalancer     
+ #   type: NodePort      
+ 
+
+
+  
+        
+                        

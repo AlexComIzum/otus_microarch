@@ -1,0 +1,281 @@
+apiVersion : apps/v1
+kind : Deployment
+metadata:
+    name: {{ .Release.Name }}
+    namespace: {{ .Values.app.namespace }}
+    labels:
+       app: {{ .Release.Name }}-ex-dep      
+spec:
+    replicas: {{ .Values.replicaCount }}
+    selector:
+        matchLabels:
+            app: {{ .Release.Name }}
+    template:
+        metadata:
+            labels:
+                app: {{ .Release.Name }}
+        spec:
+            containers:
+              - name : {{ .Release.Name }}-dep
+                image: {{ .Values.container.image }}                              
+                ports:
+                  - containerPort: {{ .Values.server.port }}        
+                env:               
+
+                - name: logging.config
+                  valueFrom:
+                    configMapKeyRef:
+                      name: log-payment-cm  
+                      key: pathlogfile                
+                 
+                - name: server.port
+                  value: "{{ .Values.server.port }}"
+                      
+                - name: db_dialect
+                  valueFrom:
+                    configMapKeyRef:
+                      name: dbset-cm  
+                      key: db_dialect       
+                      
+                - name: db_driver_class
+                  valueFrom:
+                    configMapKeyRef:
+                      name: dbset-cm  
+                      key: db_driver_class       
+                      
+                - name: db_provider_class
+                  valueFrom:
+                    configMapKeyRef:
+                      name: dbset-cm  
+                      key: db_provider_class   
+                
+                - name: db_url
+                  valueFrom:
+                    configMapKeyRef:
+                      name: dbset-cm  
+                      key: db_url
+                
+                - name: db_username
+                  valueFrom:                    
+                    secretKeyRef:
+                      name: payment-secret
+                      key: username                      
+                
+                - name: db_password
+                  valueFrom:                    
+                    secretKeyRef:
+                      name: payment-secret
+                      key: password
+                
+                - name: db_current_session_context_class
+                  valueFrom:
+                    configMapKeyRef:
+                      name: dbset-cm  
+                      key: db_current_session_context_class            
+                
+                - name: db_timeout
+                  valueFrom:
+                    configMapKeyRef:
+                      name: dbset-cm  
+                      key: db_timeout
+                
+                - name: db_acquireRetryAttempts
+                  valueFrom:
+                    configMapKeyRef:
+                      name: dbset-cm  
+                      key: db_acquireRetryAttempts            
+                
+                - name: db_acquireRetryDelay
+                  valueFrom:
+                    configMapKeyRef:
+                      name: dbset-cm  
+                      key: db_acquireRetryDelay
+                
+                - name: db_breakAfterAcquireFailure
+                  valueFrom:
+                    configMapKeyRef:
+                      name: dbset-cm  
+                      key: db_breakAfterAcquireFailure            
+                
+                - name: db_maxConnectionAge
+                  valueFrom:
+                    configMapKeyRef:
+                      name: dbset-cm  
+                      key: db_maxConnectionAge
+                
+                - name: db_maxIdleTime
+                  valueFrom:
+                    configMapKeyRef:
+                      name: dbset-cm  
+                      key: db_maxIdleTime           
+                
+                - name: db_maxIdleTimeExcessConnections
+                  valueFrom:
+                    configMapKeyRef:
+                      name: dbset-cm  
+                      key: db_maxIdleTimeExcessConnections
+                
+                - name: db_idleConnectionTestPeriod
+                  valueFrom:
+                    configMapKeyRef:
+                      name: dbset-cm  
+                      key: db_idleConnectionTestPeriod    
+                      
+                - name: management.security.enabled
+                  valueFrom:
+                    configMapKeyRef:
+                      name: paymentmetrics-cm  
+                      key: management.security.enabled
+                
+                - name: management.endpoint.health.show-details
+                  valueFrom:
+                    configMapKeyRef:
+                      name: paymentmetrics-cm  
+                      key: management.endpoint.health.show-details
+                
+                - name: management.metrics.distribution.slo.http.server.requests
+                  valueFrom:
+                    configMapKeyRef:
+                      name: paymentmetrics-cm  
+                      key: management.metrics.distribution.slo.http.server.requests
+                
+                - name: management.metrics.export.prometheus.enabled
+                  valueFrom:
+                    configMapKeyRef:
+                      name: paymentmetrics-cm  
+                      key: management.metrics.export.prometheus.enabled
+                
+                - name: management.endpoints.web.exposure.include
+                  valueFrom:
+                    configMapKeyRef:
+                      name: paymentmetrics-cm  
+                      key: management.endpoints.web.exposure.include
+                
+                - name: management.metrics.distribution.percentiles-histogram.http.server.requests
+                  valueFrom:
+                    configMapKeyRef:
+                      name: paymentmetrics-cm 
+                      key: management.metrics.distribution.percentiles-histogram.http.server.requests    
+                      
+                - name: payment.consumer.payment.kafka.topic
+                  valueFrom:
+                    configMapKeyRef:
+                      name: kafka-cm
+                      key: payment.consumer.payment.kafka.topic
+
+                - name: payment.consumer.payment.kafka.url
+                  valueFrom:
+                    configMapKeyRef:
+                      name: kafka-cm
+                      key: payment.consumer.payment.kafka.url
+
+                - name: payment.consumer.payment.kafka.group.id
+                  valueFrom:
+                    configMapKeyRef:
+                      name: kafka-cm
+                      key: payment.consumer.payment.kafka.group.id
+
+                - name: payment.consumer.payment.kafka.partition
+                  valueFrom:
+                    configMapKeyRef:
+                      name: kafka-cm
+                      key: payment.consumer.payment.kafka.partition
+
+                - name: payment.consumer.payment.kafka.auto.offset.reset
+                  valueFrom:
+                    configMapKeyRef:
+                      name: kafka-cm
+                      key: payment.consumer.payment.kafka.auto.offset.reset
+
+                - name: payment.consumer.payment.kafka.enable.auto.commit
+                  valueFrom:
+                    configMapKeyRef:
+                      name: kafka-cm
+                      key: payment.consumer.payment.kafka.enable.auto.commit
+
+                - name: payment.consumer.payment.kafka.max.poll.interval.ms
+                  valueFrom:
+                    configMapKeyRef:
+                      name: kafka-cm
+                      key: payment.consumer.payment.kafka.max.poll.interval.ms
+
+                - name: payment.consumer.payment.kafka.max.poll.records
+                  valueFrom:
+                    configMapKeyRef:
+                      name: kafka-cm
+                      key: payment.consumer.payment.kafka.max.poll.records
+
+                - name: payment.consumer.payment.kafka.default.api.timeout.ms
+                  valueFrom:
+                    configMapKeyRef:
+                      name: kafka-cm
+                      key: payment.consumer.payment.kafka.default.api.timeout.ms        
+
+                - name: payment.producer.notifier.kafka.topic
+                  valueFrom:
+                    configMapKeyRef:
+                      name: kafka-cm
+                      key: payment.producer.notifier.kafka.topic
+
+                - name: payment.producer.notifier.kafka.url
+                  valueFrom:
+                    configMapKeyRef:
+                      name: kafka-cm
+                      key: payment.producer.notifier.kafka.url
+
+                - name: payment.producer.notifier.kafka.group.id
+                  valueFrom:
+                    configMapKeyRef:
+                      name: kafka-cm
+                      key: payment.producer.notifier.kafka.group.id
+
+                - name: payment.producer.notifier.kafka.partition
+                  valueFrom:
+                    configMapKeyRef:
+                      name: kafka-cm
+                      key: payment.producer.notifier.kafka.partition                      
+
+                - name: payment.producer.paymentrs.kafka.topic
+                  valueFrom:
+                    configMapKeyRef:
+                      name: kafka-cm
+                      key: payment.producer.paymentrs.kafka.topic
+
+                - name: payment.producer.paymentrs.kafka.url
+                  valueFrom:
+                    configMapKeyRef:
+                      name: kafka-cm
+                      key: payment.producer.paymentrs.kafka.url
+
+                - name: payment.producer.paymentrs.kafka.group.id
+                  valueFrom:
+                    configMapKeyRef:
+                      name: kafka-cm
+                      key: payment.producer.paymentrs.kafka.group.id
+
+                - name: payment.producer.paymentrs.kafka.partition
+                  valueFrom:
+                    configMapKeyRef:
+                      name: kafka-cm
+                      key: payment.producer.paymentrs.kafka.partition                      
+
+                - name: payment.log.msg.length
+                  value: "{{ .Values.log.msg.length }}"   
+ 
+                volumeMounts:
+                - name: logforjconfig
+                  mountPath: "/usr/local/service/config"
+                  readOnly: true            
+                
+            volumes:
+              - name: logforjconfig
+                configMap:
+                  name: log-payment-cm
+                  items:
+                  - key: "loggerconfig"    
+                    path: "log4j2.properties"        
+
+
+                    
+                
+               

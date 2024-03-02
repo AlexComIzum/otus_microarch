@@ -1,0 +1,36 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: orderwr
+  namespace: {{ .Values.app.namespace }}
+  annotations:
+    nginx.ingress.kubernetes.io/auth-url: "http://identprov.authprovider.svc.cluster.local:80/authenticate"
+    nginx.ingress.kubernetes.io/auth-signin: "http://$host/signin"
+    nginx.ingress.kubernetes.io/auth-response-headers: "X-User,X-Email,X-First-Name,Authorization"
+spec:
+  rules:  
+   - host: arch.homework  
+     http:   
+      paths:   
+      - path: /order
+        pathType: Prefix
+        backend:   
+          service:   
+            name: orderwr            
+            port:   
+              number: 80
+      - path: /orderupdate
+        pathType: Prefix
+        backend:   
+          service:   
+            name: orderwr            
+            port:   
+              number: 80
+      - path: /orderbyadv
+        pathType: Prefix
+        backend:   
+          service:   
+            name: orderwr            
+            port:   
+              number: 80
+              

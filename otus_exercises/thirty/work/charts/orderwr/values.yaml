@@ -1,0 +1,77 @@
+server:
+  port: 8083
+  
+container:
+  image: sergey789/orderwr:v2.0
+  
+replicaCount: 1
+  
+
+db:
+  url: jdbc:postgresql://bdferm-postgresql.ferm-ns:5434/postgres
+   
+ 
+port:
+  name: orderwr-port  
+  
+app:
+  namespace: orderwr-ns
+  
+ingress:
+  namespace: ingress-ns    
+    
+kafka:
+  consumer:
+    deliveryrs:
+      topic: deliveryrs
+      url: 192.168.45.108:9092
+      group:
+        id: group
+      partition: 0
+    paymentrs:
+      topic: paymentrs
+      url: 192.168.45.108:9092
+      group:
+        id: group
+      partition: 0      
+  producer:
+    delivery:
+      topic: delivery
+      url: 192.168.45.108:9092
+      group:
+        id: group
+      partition: 0  
+    payment:
+      topic: payment
+      url: 192.168.45.108:9092
+      group:
+        id: group
+      partition: 0       
+    advstatus:
+      topic: advstatusin
+      url: 192.168.45.108:9092
+      group:
+        id: group
+      partition: 0       
+      
+    
+
+log:
+  msg:
+    length: "30"
+    
+externalservices:
+  kafka:
+    ip: 192.168.45.108
+    port: 9092    
+    
+
+ 
+
+
+    
+
+ 
+
+  
+

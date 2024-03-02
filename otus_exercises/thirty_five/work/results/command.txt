@@ -1,5 +1,5 @@
 helm chart доступны на GIT:
-https://github.com/AlexComIzum/otus_microarch/tree/master/otus_exercises/thirty/work/charts
+https://github.com/AlexComIzum/otus_microarch/tree/master/otus_exercises/thirty_five/work/charts
 
 Команды
 I) а) запустить kafka:
@@ -42,4 +42,4 @@ https://www.postman.com/alexizum/workspace/otus-exercise-microservice-alex-izum/
 и файл Ferm.postman_collection.json
 
 В файле work_35.docx описана схема взаимодействия микросервисов, sequence diagramm c API.
-В файле result_test.jpg представлены результаты тестов, проведенных с помощью команды newman.
+В директории newman_result представлены результаты тестов, проведенных с помощью команды newman.

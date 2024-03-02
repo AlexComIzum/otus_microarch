@@ -35,22 +35,10 @@ II) 1) minikube addons enable ingress  либо  helm install nginx ingress-ngin
    19) kubectl create namespace orderwr-ns  
    20) Развертывание приложения orderwr
        helm install orderwr ./orderwr
-   21) Обновление ingress-nginx для отправки метрик в prometheus
-       helm upgrade ingress-nginx ingress-nginx/ingress-nginx --set controller.metrics.enabled=true --set controller.metrics.serviceMonitor.enabled=true --set controller.metrics.serviceMonitor.additionalLabels.release="stack"
-   22) Установка экспортера postgres-exporter
-       helm install pgexporter prometheus-community/prometheus-postgres-exporter -f .\prometheus_postgres_exporter\secret_postgresql_exporter.yaml -f .\prometheus_postgres_exporter\values.yaml      
-
-III) Запуск opensearch и opensearch-dashboards для сбора метрик
-     В opensearch-dashboards искать source "fermerdipl"
-     fluent-bit сейчас настроен на источник 192.168.45.108:9200
-     user: admin
-     password: admin
 
 
-
-Приложил коллекцию postman c примерами запросов :
+Приложил коллекцию postman c примерами запросов по ссылке
 https://www.postman.com/alexizum/workspace/otus-exercise-microservice-alex-izum/collection/30113005-1994f204-097b-4c9b-9213-f7ddd6c101df?action=share&creator=30113005
+и файл Ferm.postman_collection.json
 
-Приложил dashboard проекта для Grafana    
-
-Приложил презентацию Проектной работы - файл dipl.pptx
+В файле Saga_30_work.docx описана схема работы микросервисов и как работает Saga. Saga запускатся в момент, когда отправляется запрос "Подтверждение заказа"

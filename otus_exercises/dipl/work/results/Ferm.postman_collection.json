@@ -1,0 +1,4842 @@
+{
+	"info": {
+		"_postman_id": "1994f204-097b-4c9b-9213-f7ddd6c101df",
+		"name": "Ferm",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30113005",
+		"_collection_link": "https://www.postman.com/alexizum/workspace/otus-exercise-microservice-alex-izum/collection/30113005-1994f204-097b-4c9b-9213-f7ddd6c101df?action=share&source=collection_link&creator=30113005"
+	},
+	"item": [
+		{
+			"name": "Регистрация фермера",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.globals.set(\"baseUrl\", \"arch.homework\");\r",
+							"pm.collectionVariables.set(\"password_user_1\", pm.variables.replaceIn('{{$randomPassword}}'));\r",
+							"pm.collectionVariables.set(\"email\", pm.variables.replaceIn('{{$randomEmail}}'));\r",
+							"pm.collectionVariables.set(\"username_user_1\", pm.variables.replaceIn('{{$randomFirstName}}'));\r",
+							"pm.collectionVariables.set(\"firstName\", pm.variables.replaceIn('{{$randomFirstName}}'));\r",
+							"pm.collectionVariables.set(\"lastName\", pm.variables.replaceIn('{{$randomLastName}}'));\r",
+							"pm.collectionVariables.set(\"phone\", pm.variables.replaceIn('{{$randomPhoneNumber}}'));"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseJSON = JSON.parse(responseBody);\r",
+							"pm.collectionVariables.set(\"user_id_1\", responseJSON[\"id\"]);\r",
+							"\r",
+							"pm.test(\"test token data\", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"id\":0,\"username\":\"{{username_user_1}}\",\"firstName\":\"{{firstName}}\",\"lastName\":\"{{lastName}}\",\"email\":\"{{email}}\",\"phone\":\"{{phone}}\",\"password\":\"{{password_user_1}}\"}"
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/register",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "User_Registration_1",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"id\":0,\"username\":\"{{username_user_1}}\",\"firstName\":\"{{firstName}}\",\"lastName\":\"{{lastName}}\",\"email\":\"{{email}}\",\"phone\":\"{{phone}}\",\"password\":\"{{password_user_1}}\"}"
+						},
+						"url": {
+							"raw": "http://{{baseUrl}}/register",
+							"protocol": "http",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"register"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sat, 18 Nov 2023 16:10:21 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 21,\n    \"username\": \"Jake\",\n    \"firstName\": \"Tabitha\",\n    \"lastName\": \"Koelpin\",\n    \"email\": \"Horace77@yahoo.com\",\n    \"phone\": \"916-960-6060\",\n    \"password\": \"3LyA4Mkeoih6uzb\",\n    \"age\": 0,\n    \"country\": null\n}"
+				}
+			]
+		},
+		{
+			"name": "Login фермера",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseJSON = pm.cookies.get('JSESSIONID')\r",
+							"pm.collectionVariables.set(\"JSESSIONID_one\", pm.cookies.get('JSESSIONID'));\r",
+							"\r",
+							"pm.test(\"test token data\", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData.status).to.eql(\"ok\")\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\"login\":\"{{username_user_1}}\",\"password\":\"{{password_user_1}}\"}"
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/login",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Login_user1",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\"login\":\"{{username_user_1}}\",\"password\":\"{{password_user_1}}\"}"
+						},
+						"url": {
+							"raw": "http://{{baseUrl}}/login",
+							"protocol": "http",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sat, 18 Nov 2023 16:10:24 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"ok\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Аутент-ия и автор-ия фермера",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"test token data\", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "JSESSIONID",
+						"value": "{{JSESSIONID_one}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://{{baseUrl}}/authenticate",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"authenticate"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Authenticate",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "JSESSIONID",
+								"value": "{{JSESSIONID_one}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://{{baseUrl}}/authenticate",
+							"protocol": "http",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"authenticate"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sat, 18 Nov 2023 16:10:37 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "text/plain;charset=UTF-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "259"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "JSESSIONID=6E492D95513F07C5E6FCEBE946755C0F; HttpOnly"
+						},
+						{
+							"key": "X-User",
+							"value": "Jake"
+						},
+						{
+							"key": "X-Email",
+							"value": "Horace77@yahoo.com"
+						},
+						{
+							"key": "X-First-Name",
+							"value": "Tabitha"
+						},
+						{
+							"key": "Authorization",
+							"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJKYWtlIiwiZmlyc3RuYW1lIjoiVGFiaXRoYSIsImV4cCI6MTcwMDM0MTgzNywidXNlcmlkIjoiMjEiLCJpYXQiOjE3MDAzMjM4MzcsImVtYWlsIjoiSG9yYWNlNzdAeWFob28uY29tIn0.S8Sb7x-pkkR7yilreCBM1q8usIUd0C3z3r3HcA5qfVoA0nWMtF6fR5qzOOxORdn18LrO39DBdXgcEXZAHpKhJg"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						}
+					],
+					"cookie": [],
+					"body": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJKYWtlIiwiZmlyc3RuYW1lIjoiVGFiaXRoYSIsImV4cCI6MTcwMDM0MTgzNywidXNlcmlkIjoiMjEiLCJpYXQiOjE3MDAzMjM4MzcsImVtYWlsIjoiSG9yYWNlNzdAeWFob28uY29tIn0.S8Sb7x-pkkR7yilreCBM1q8usIUd0C3z3r3HcA5qfVoA0nWMtF6fR5qzOOxORdn18LrO39DBdXgcEXZAHpKhJg"
+				}
+			]
+		},
+		{
+			"name": "Создание профиля фермера",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.collectionVariables.set(\"age\", pm.variables.replaceIn('{{$randomInt}}'));\r",
+							"pm.collectionVariables.set(\"country\", pm.variables.replaceIn('{{$randomCountry}}'));"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseJSON = pm.cookies.get('JSESSIONID')\r",
+							"pm.collectionVariables.set(\"JSESSIONID_one\", pm.cookies.get('JSESSIONID'));\r",
+							"\r",
+							"pm.test(\"test token data\", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData.code).to.eql(0)\r",
+							"pm.expect(jsonData.message).to.eql(\"successful operation\")\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "JSESSIONID",
+						"value": "{{JSESSIONID_one}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"userid\":{{user_id_1}},\"age\":{{age}},\"country\":\"{{country}}\"}"
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/userprofile",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"userprofile"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "AddUserProfile_1",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "JSESSIONID",
+								"value": "{{JSESSIONID_one}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"userid\":{{user_id_1}},\"age\":{{age}},\"country\":\"{{country}}\"}"
+						},
+						"url": {
+							"raw": "http://{{baseUrl}}/userprofile",
+							"protocol": "http",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"userprofile"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sat, 18 Nov 2023 16:10:40 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "JSESSIONID=6E492D95513F07C5E6FCEBE946755C0F; HttpOnly"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 0,\n    \"message\": \"successful operation\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Получение профиля фермера",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"test token data\", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData.data.userid).to.eql(pm.collectionVariables.get(\"user_id_1\"))\r",
+							"pm.expect(jsonData.data.country).to.eql(pm.collectionVariables.get(\"country\"))\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "JSESSIONID",
+						"value": "{{JSESSIONID_one}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://{{baseUrl}}/userprofile?userid={{user_id_1}}",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"userprofile"
+					],
+					"query": [
+						{
+							"key": "userid",
+							"value": "{{user_id_1}}"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "GetUserProfile_1",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "JSESSIONID",
+								"value": "{{JSESSIONID_one}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://{{baseUrl}}/userprofile?userid={{user_id_1}}",
+							"protocol": "http",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"userprofile"
+							],
+							"query": [
+								{
+									"key": "userid",
+									"value": "{{user_id_1}}"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sat, 18 Nov 2023 16:10:44 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "JSESSIONID=6E492D95513F07C5E6FCEBE946755C0F; HttpOnly"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"success\": true,\n    \"message\": \"\",\n    \"data\": {\n        \"userid\": 21,\n        \"age\": 186,\n        \"country\": \"Syrian Arab Republic\"\n    },\n    \"errorCode\": \"0\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Создание объявления",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseJSON = JSON.parse(responseBody);\r",
+							"pm.collectionVariables.set(\"advnumber\", responseJSON[\"data\"]);\r",
+							"\r",
+							"pm.test(\"test create\", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData.success).to.eql(true)\r",
+							"pm.expect(jsonData.message).to.eql(\"successful operation\")\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"guidG2\", pm.variables.replaceIn('{{$randomUUID}}'));"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "JSESSIONID",
+						"value": "{{JSESSIONID_one}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"guid\":\"{{guidG2}}\",\"advertisement\":{\"id\":0,\"name\":\"Milk\",\"userid\":{{user_id_1}},\"price\":10.0,\"quantity\":25.0,\"status\":\"new\",\"unitmeasure\":2,\"number\":0,\"date\":1709139701788,\"description\":\"Milk\"},\"comment\":null,\"advStatus\":null}\r\n"
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/adv",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"adv"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Регистрация Менеджера",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"password_user_4\", pm.variables.replaceIn('{{$randomPassword}}'));\r",
+							"pm.collectionVariables.set(\"email_4\", pm.variables.replaceIn('{{$randomEmail}}'));\r",
+							"pm.collectionVariables.set(\"username_user_4\", pm.variables.replaceIn('{{$randomFirstName}}'));\r",
+							"pm.collectionVariables.set(\"firstName_4\", pm.variables.replaceIn('{{$randomFirstName}}'));\r",
+							"pm.collectionVariables.set(\"lastName_4\", pm.variables.replaceIn('{{$randomLastName}}'));\r",
+							"pm.collectionVariables.set(\"phone_4\", pm.variables.replaceIn('{{$randomPhoneNumber}}'));"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseJSON = JSON.parse(responseBody);\r",
+							"pm.collectionVariables.set(\"user_id_4\", responseJSON[\"id\"]);\r",
+							"\r",
+							"pm.test(\"test reg moderator\", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"id\":0,\"username\":\"{{username_user_4}}\",\"firstName\":\"{{firstName_4}}\",\"lastName\":\"{{lastName_4}}\",\"email\":\"{{email_4}}\",\"phone\":\"{{phone_4}}\",\"password\":\"{{password_user_4}}\"}"
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/register",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "User_Registration_1",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"id\":0,\"username\":\"{{username_user_1}}\",\"firstName\":\"{{firstName}}\",\"lastName\":\"{{lastName}}\",\"email\":\"{{email}}\",\"phone\":\"{{phone}}\",\"password\":\"{{password_user_1}}\"}"
+						},
+						"url": {
+							"raw": "http://{{baseUrl}}/register",
+							"protocol": "http",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"register"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sat, 18 Nov 2023 16:10:21 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 21,\n    \"username\": \"Jake\",\n    \"firstName\": \"Tabitha\",\n    \"lastName\": \"Koelpin\",\n    \"email\": \"Horace77@yahoo.com\",\n    \"phone\": \"916-960-6060\",\n    \"password\": \"3LyA4Mkeoih6uzb\",\n    \"age\": 0,\n    \"country\": null\n}"
+				}
+			]
+		},
+		{
+			"name": "Login менеджера",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseJSON = pm.cookies.get('JSESSIONID')\r",
+							"pm.collectionVariables.set(\"JSESSIONID_four\", pm.cookies.get('JSESSIONID'));\r",
+							"\r",
+							"pm.test(\"test token data\", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData.status).to.eql(\"ok\")\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\"login\":\"{{username_user_4}}\",\"password\":\"{{password_user_4}}\"}"
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/login",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Login_user1",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\"login\":\"{{username_user_1}}\",\"password\":\"{{password_user_1}}\"}"
+						},
+						"url": {
+							"raw": "http://{{baseUrl}}/login",
+							"protocol": "http",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sat, 18 Nov 2023 16:10:24 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"ok\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Аутент-ия и автор-ия менеджера",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"test token data\", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "JSESSIONID",
+						"value": "{{JSESSIONID_four}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://{{baseUrl}}/authenticate",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"authenticate"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Authenticate",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "JSESSIONID",
+								"value": "{{JSESSIONID_one}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://{{baseUrl}}/authenticate",
+							"protocol": "http",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"authenticate"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sat, 18 Nov 2023 16:10:37 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "text/plain;charset=UTF-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "259"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "JSESSIONID=6E492D95513F07C5E6FCEBE946755C0F; HttpOnly"
+						},
+						{
+							"key": "X-User",
+							"value": "Jake"
+						},
+						{
+							"key": "X-Email",
+							"value": "Horace77@yahoo.com"
+						},
+						{
+							"key": "X-First-Name",
+							"value": "Tabitha"
+						},
+						{
+							"key": "Authorization",
+							"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJKYWtlIiwiZmlyc3RuYW1lIjoiVGFiaXRoYSIsImV4cCI6MTcwMDM0MTgzNywidXNlcmlkIjoiMjEiLCJpYXQiOjE3MDAzMjM4MzcsImVtYWlsIjoiSG9yYWNlNzdAeWFob28uY29tIn0.S8Sb7x-pkkR7yilreCBM1q8usIUd0C3z3r3HcA5qfVoA0nWMtF6fR5qzOOxORdn18LrO39DBdXgcEXZAHpKhJg"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						}
+					],
+					"cookie": [],
+					"body": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJKYWtlIiwiZmlyc3RuYW1lIjoiVGFiaXRoYSIsImV4cCI6MTcwMDM0MTgzNywidXNlcmlkIjoiMjEiLCJpYXQiOjE3MDAzMjM4MzcsImVtYWlsIjoiSG9yYWNlNzdAeWFob28uY29tIn0.S8Sb7x-pkkR7yilreCBM1q8usIUd0C3z3r3HcA5qfVoA0nWMtF6fR5qzOOxORdn18LrO39DBdXgcEXZAHpKhJg"
+				}
+			]
+		},
+		{
+			"name": "Модерация объявления",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"guidG\", pm.variables.replaceIn('{{$randomUUID}}'));\r",
+							"pm.collectionVariables.set(\"comment_adv\", pm.variables.replaceIn('{{$randomCatchPhraseDescriptor}}'));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"test token data\", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData.success).to.eql(true)\r",
+							"pm.expect(jsonData.message).to.eql(\"successful operation\")\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "JSESSIONID",
+						"value": "{{JSESSIONID_four}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"guid\":\"{{guidG}}\",\"advertisement\":{\"id\":0,\"name\":null,\"userid\":{{user_id_1}},\"price\":0.0,\"quantity\":0.0,\"status\":\"public\",\"unitmeasure\":0,\"number\":{{advnumber}},\"date\":null,\"description\":null},\"comment\":{\"id\":0,\"text\":\"{{comment_adv}}\",\"advnumber\":{{advnumber}}},\"advStatus\":null}"
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/advcomment",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"advcomment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Регистрация Покупателя 1",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"password_user_2\", pm.variables.replaceIn('{{$randomPassword}}'));\r",
+							"pm.collectionVariables.set(\"email_2\", pm.variables.replaceIn('{{$randomEmail}}'));\r",
+							"pm.collectionVariables.set(\"username_user_2\", pm.variables.replaceIn('{{$randomFirstName}}'));\r",
+							"pm.collectionVariables.set(\"firstName_2\", pm.variables.replaceIn('{{$randomFirstName}}'));\r",
+							"pm.collectionVariables.set(\"lastName_2\", pm.variables.replaceIn('{{$randomLastName}}'));\r",
+							"pm.collectionVariables.set(\"phone_2\", pm.variables.replaceIn('{{$randomPhoneNumber}}'));"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseJSON = JSON.parse(responseBody);\r",
+							"pm.collectionVariables.set(\"user_id_2\", responseJSON[\"id\"]);\r",
+							"\r",
+							"pm.test(\"test token data\", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData.success).to.eql(true)\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"id\":0,\"username\":\"{{username_user_2}}\",\"firstName\":\"{{firstName_2}}\",\"lastName\":\"{{lastName_2}}\",\"email\":\"{{email_2}}\",\"phone\":\"{{phone_2}}\",\"password\":\"{{password_user_2}}\"}"
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/register",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "User_Registration_1",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"id\":0,\"username\":\"{{username_user_1}}\",\"firstName\":\"{{firstName}}\",\"lastName\":\"{{lastName}}\",\"email\":\"{{email}}\",\"phone\":\"{{phone}}\",\"password\":\"{{password_user_1}}\"}"
+						},
+						"url": {
+							"raw": "http://{{baseUrl}}/register",
+							"protocol": "http",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"register"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sat, 18 Nov 2023 16:10:21 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 21,\n    \"username\": \"Jake\",\n    \"firstName\": \"Tabitha\",\n    \"lastName\": \"Koelpin\",\n    \"email\": \"Horace77@yahoo.com\",\n    \"phone\": \"916-960-6060\",\n    \"password\": \"3LyA4Mkeoih6uzb\",\n    \"age\": 0,\n    \"country\": null\n}"
+				}
+			]
+		},
+		{
+			"name": "Login Покупателя 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseJSON = pm.cookies.get('JSESSIONID')\r",
+							"pm.collectionVariables.set(\"JSESSIONID_twow\", pm.cookies.get('JSESSIONID'));\r",
+							"\r",
+							"pm.test(\"test token data\", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData.status).to.eql(\"ok\")\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\"login\":\"{{username_user_2}}\",\"password\":\"{{password_user_2}}\"}"
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/login",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Login_user1",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\"login\":\"{{username_user_1}}\",\"password\":\"{{password_user_1}}\"}"
+						},
+						"url": {
+							"raw": "http://{{baseUrl}}/login",
+							"protocol": "http",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sat, 18 Nov 2023 16:10:24 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"ok\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Аутент-ия и автор-ия покупателя 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"test token data7\", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "JSESSIONID",
+						"value": "{{JSESSIONID_twow}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://{{baseUrl}}/authenticate",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"authenticate"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Authenticate",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "JSESSIONID",
+								"value": "{{JSESSIONID_one}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://{{baseUrl}}/authenticate",
+							"protocol": "http",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"authenticate"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sat, 18 Nov 2023 16:10:37 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "text/plain;charset=UTF-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "259"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "JSESSIONID=6E492D95513F07C5E6FCEBE946755C0F; HttpOnly"
+						},
+						{
+							"key": "X-User",
+							"value": "Jake"
+						},
+						{
+							"key": "X-Email",
+							"value": "Horace77@yahoo.com"
+						},
+						{
+							"key": "X-First-Name",
+							"value": "Tabitha"
+						},
+						{
+							"key": "Authorization",
+							"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJKYWtlIiwiZmlyc3RuYW1lIjoiVGFiaXRoYSIsImV4cCI6MTcwMDM0MTgzNywidXNlcmlkIjoiMjEiLCJpYXQiOjE3MDAzMjM4MzcsImVtYWlsIjoiSG9yYWNlNzdAeWFob28uY29tIn0.S8Sb7x-pkkR7yilreCBM1q8usIUd0C3z3r3HcA5qfVoA0nWMtF6fR5qzOOxORdn18LrO39DBdXgcEXZAHpKhJg"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						}
+					],
+					"cookie": [],
+					"body": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJKYWtlIiwiZmlyc3RuYW1lIjoiVGFiaXRoYSIsImV4cCI6MTcwMDM0MTgzNywidXNlcmlkIjoiMjEiLCJpYXQiOjE3MDAzMjM4MzcsImVtYWlsIjoiSG9yYWNlNzdAeWFob28uY29tIn0.S8Sb7x-pkkR7yilreCBM1q8usIUd0C3z3r3HcA5qfVoA0nWMtF6fR5qzOOxORdn18LrO39DBdXgcEXZAHpKhJg"
+				}
+			]
+		},
+		{
+			"name": "Создание профиля Покупателем 1",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"age_2\", pm.variables.replaceIn('{{$randomInt}}'));\r",
+							"pm.collectionVariables.set(\"country_2\", pm.variables.replaceIn('{{$randomCountry}}'));"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseJSON = pm.cookies.get('JSESSIONID')\r",
+							"pm.collectionVariables.set(\"JSESSIONID_one\", pm.cookies.get('JSESSIONID'));\r",
+							"\r",
+							"pm.test(\"test token data\", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData.code).to.eql(0)\r",
+							"pm.expect(jsonData.message).to.eql(\"successful operation\")\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "JSESSIONID",
+						"value": "{{JSESSIONID_twow}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"userid\":{{user_id_2}},\"age\":{{age_2}},\"country\":\"{{country_2}}\"}\r\n"
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/userprofile",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"userprofile"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "AddUserProfile_1",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "JSESSIONID",
+								"value": "{{JSESSIONID_one}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"userid\":{{user_id_1}},\"age\":{{age}},\"country\":\"{{country}}\"}"
+						},
+						"url": {
+							"raw": "http://{{baseUrl}}/userprofile",
+							"protocol": "http",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"userprofile"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sat, 18 Nov 2023 16:10:40 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "JSESSIONID=6E492D95513F07C5E6FCEBE946755C0F; HttpOnly"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 0,\n    \"message\": \"successful operation\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Создание заказа 1",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"guidG\", pm.variables.replaceIn('{{$randomUUID}}'));\r",
+							"pm.collectionVariables.set(\"streetfrom\", pm.variables.replaceIn('{{$randomStreetAddress}}'));\r",
+							"pm.collectionVariables.set(\"streetto\", pm.variables.replaceIn('{{$randomStreetAddress}}'));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseJSON = JSON.parse(responseBody);\r",
+							"pm.collectionVariables.set(\"ordernumber_1\", responseJSON[\"data\"]);\r",
+							"\r",
+							"pm.test(\"test create\", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData.success).to.eql(true)\r",
+							"pm.expect(jsonData.message).to.eql(\"successful operation\")\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "JSESSIONID",
+						"value": "{{JSESSIONID_twow}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"guid\":\"{{guidG}}\",\"order\":{\"id\":0,\"userid\":{{user_id_2}},\"price\":90.0,\"quantity\":12.0,\"status\":\"consideration\",\"unitmeasure\":2,\"number\":0,\"advnumber\":{{advnumber}},\"date\":1708871740566,\"payment\":null,\"delivery\":\"\"},\"payment\":{\"id\":0,\"ordernumber\":0,\"amount\":180.0,\"status\":\"on_payment\",\"userid\":{{user_id_2}}},\"advquantity\":25.0,\"deliveryList\":{\"id\":0,\"ordernumber\":0,\"status\":\"on_delivery\",\"datefrom\":null,\"addressto\":\"{{streetto}}\",\"payd\":true,\"addressfrom\":\"{{streetfrom}}\",\"warehouseid\":0,\"dateto\":1708871740567,\"number\":0,\"advnumber\":{{advnumber}}},\"paymentStatus\":null,\"orderStatus\":null,\"advStatus\":null}\r\n"
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/order",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"order"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Регистрация Покупателя 2",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"password_user_3\", pm.variables.replaceIn('{{$randomPassword}}'));\r",
+							"pm.collectionVariables.set(\"email_3\", pm.variables.replaceIn('{{$randomEmail}}'));\r",
+							"pm.collectionVariables.set(\"username_user_3\", pm.variables.replaceIn('{{$randomFirstName}}'));\r",
+							"pm.collectionVariables.set(\"firstName_3\", pm.variables.replaceIn('{{$randomFirstName}}'));\r",
+							"pm.collectionVariables.set(\"lastName_3\", pm.variables.replaceIn('{{$randomLastName}}'));\r",
+							"pm.collectionVariables.set(\"phone_3\", pm.variables.replaceIn('{{$randomPhoneNumber}}'));"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseJSON = JSON.parse(responseBody);\r",
+							"pm.collectionVariables.set(\"user_id_3\", responseJSON[\"id\"]);\r",
+							"\r",
+							"pm.test(\"test token data\", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"id\":0,\"username\":\"{{username_user_3}}\",\"firstName\":\"{{firstName_3}}\",\"lastName\":\"{{lastName_3}}\",\"email\":\"{{email_3}}\",\"phone\":\"{{phone_3}}\",\"password\":\"{{password_user_3}}\"}"
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/register",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "User_Registration_1",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"id\":0,\"username\":\"{{username_user_1}}\",\"firstName\":\"{{firstName}}\",\"lastName\":\"{{lastName}}\",\"email\":\"{{email}}\",\"phone\":\"{{phone}}\",\"password\":\"{{password_user_1}}\"}"
+						},
+						"url": {
+							"raw": "http://{{baseUrl}}/register",
+							"protocol": "http",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"register"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sat, 18 Nov 2023 16:10:21 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 21,\n    \"username\": \"Jake\",\n    \"firstName\": \"Tabitha\",\n    \"lastName\": \"Koelpin\",\n    \"email\": \"Horace77@yahoo.com\",\n    \"phone\": \"916-960-6060\",\n    \"password\": \"3LyA4Mkeoih6uzb\",\n    \"age\": 0,\n    \"country\": null\n}"
+				}
+			]
+		},
+		{
+			"name": "Login Покупателя 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseJSON = pm.cookies.get('JSESSIONID')\r",
+							"pm.collectionVariables.set(\"JSESSIONID_three\", pm.cookies.get('JSESSIONID'));\r",
+							"\r",
+							"pm.test(\"test token data\", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData.status).to.eql(\"ok\")\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\"login\":\"{{username_user_3}}\",\"password\":\"{{password_user_3}}\"}"
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/login",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Login_user1",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\"login\":\"{{username_user_1}}\",\"password\":\"{{password_user_1}}\"}"
+						},
+						"url": {
+							"raw": "http://{{baseUrl}}/login",
+							"protocol": "http",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sat, 18 Nov 2023 16:10:24 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": \"ok\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Аутент-ия и автор-ия пок-ля 2",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"test token data\", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "JSESSIONID",
+						"value": "{{JSESSIONID_three}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://{{baseUrl}}/authenticate",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"authenticate"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Authenticate",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "JSESSIONID",
+								"value": "{{JSESSIONID_one}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://{{baseUrl}}/authenticate",
+							"protocol": "http",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"authenticate"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sat, 18 Nov 2023 16:10:37 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "text/plain;charset=UTF-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "259"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "JSESSIONID=6E492D95513F07C5E6FCEBE946755C0F; HttpOnly"
+						},
+						{
+							"key": "X-User",
+							"value": "Jake"
+						},
+						{
+							"key": "X-Email",
+							"value": "Horace77@yahoo.com"
+						},
+						{
+							"key": "X-First-Name",
+							"value": "Tabitha"
+						},
+						{
+							"key": "Authorization",
+							"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJKYWtlIiwiZmlyc3RuYW1lIjoiVGFiaXRoYSIsImV4cCI6MTcwMDM0MTgzNywidXNlcmlkIjoiMjEiLCJpYXQiOjE3MDAzMjM4MzcsImVtYWlsIjoiSG9yYWNlNzdAeWFob28uY29tIn0.S8Sb7x-pkkR7yilreCBM1q8usIUd0C3z3r3HcA5qfVoA0nWMtF6fR5qzOOxORdn18LrO39DBdXgcEXZAHpKhJg"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, no-store, max-age=0, must-revalidate"
+						},
+						{
+							"key": "Pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "Expires",
+							"value": "0"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						}
+					],
+					"cookie": [],
+					"body": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJKYWtlIiwiZmlyc3RuYW1lIjoiVGFiaXRoYSIsImV4cCI6MTcwMDM0MTgzNywidXNlcmlkIjoiMjEiLCJpYXQiOjE3MDAzMjM4MzcsImVtYWlsIjoiSG9yYWNlNzdAeWFob28uY29tIn0.S8Sb7x-pkkR7yilreCBM1q8usIUd0C3z3r3HcA5qfVoA0nWMtF6fR5qzOOxORdn18LrO39DBdXgcEXZAHpKhJg"
+				}
+			]
+		},
+		{
+			"name": "Созд-ие проф-ля Пок-ем 2",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.collectionVariables.set(\"age\", pm.variables.replaceIn('{{$randomInt}}'));\r",
+							"pm.collectionVariables.set(\"country\", pm.variables.replaceIn('{{$randomCountry}}'));"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseJSON = pm.cookies.get('JSESSIONID')\r",
+							"pm.collectionVariables.set(\"JSESSIONID_one\", pm.cookies.get('JSESSIONID'));\r",
+							"\r",
+							"pm.test(\"test token data\", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData.code).to.eql(0)\r",
+							"pm.expect(jsonData.message).to.eql(\"successful operation\")\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "JSESSIONID",
+						"value": "{{JSESSIONID_three}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"userid\":{{user_id_3}},\"age\":{{age}},\"country\":\"{{country}}\"}\r\n"
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/userprofile",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"userprofile"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "AddUserProfile_1",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "JSESSIONID",
+								"value": "{{JSESSIONID_one}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"userid\":{{user_id_1}},\"age\":{{age}},\"country\":\"{{country}}\"}"
+						},
+						"url": {
+							"raw": "http://{{baseUrl}}/userprofile",
+							"protocol": "http",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"userprofile"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Sat, 18 Nov 2023 16:10:40 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Method"
+						},
+						{
+							"key": "Vary",
+							"value": "Access-Control-Request-Headers"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "JSESSIONID=6E492D95513F07C5E6FCEBE946755C0F; HttpOnly"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"code\": 0,\n    \"message\": \"successful operation\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Создание заказа 2",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"guidG\", pm.variables.replaceIn('{{$randomUUID}}'));\r",
+							"pm.collectionVariables.set(\"streetfrom\", pm.variables.replaceIn('{{$randomStreetAddress}}'));\r",
+							"pm.collectionVariables.set(\"streetto\", pm.variables.replaceIn('{{$randomStreetAddress}}'));\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseJSON = JSON.parse(responseBody);\r",
+							"pm.collectionVariables.set(\"ordernumber_2\", responseJSON[\"data\"]);\r",
+							"\r",
+							"pm.test(\"test create\", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData.success).to.eql(true)\r",
+							"pm.expect(jsonData.message).to.eql(\"successful operation\")\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "JSESSIONID",
+						"value": "{{JSESSIONID_three}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"guid\":\"{{guidG}}\",\"order\":{\"id\":0,\"userid\":{{user_id_3}},\"price\":90.0,\"quantity\":13.0,\"status\":\"consideration\",\"unitmeasure\":2,\"number\":0,\"advnumber\":{{advnumber}},\"date\":1708871740566,\"payment\":null,\"delivery\":\"\"},\"payment\":{\"id\":0,\"ordernumber\":0,\"amount\":180.0,\"status\":\"on_payment\",\"userid\":{{user_id_3}}},\"advquantity\":25.0,\"deliveryList\":{\"id\":0,\"ordernumber\":0,\"status\":\"on_delivery\",\"datefrom\":null,\"addressto\":\"{{streetto}}\",\"payd\":true,\"addressfrom\":\"{{streetfrom}}\",\"warehouseid\":0,\"dateto\":1708871740567,\"number\":0,\"advnumber\":{{advnumber}}},\"paymentStatus\":null,\"orderStatus\":null,\"advStatus\":null}"
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/order",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"order"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Пол-ть статус  объявления",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"test \", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData.success).to.eql(true)\r",
+							"pm.expect(jsonData.data.status).to.eql(\"complete\")\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "JSESSIONID",
+						"value": "{{JSESSIONID_one}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://{{baseUrl}}/advbyadvnumber?advnumber={{advnumber}}",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"advbyadvnumber"
+					],
+					"query": [
+						{
+							"key": "advnumber",
+							"value": "{{advnumber}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Получить заказы по объявлению",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"test \", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData.success).to.eql(true)\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "JSESSIONID",
+						"value": "{{JSESSIONID_one}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://{{baseUrl}}/orderbyadv?advnumber={{advnumber}}",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"orderbyadv"
+					],
+					"query": [
+						{
+							"key": "advnumber",
+							"value": "{{advnumber}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Подтвердить заказ 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"test update \", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData.success).to.eql(true)\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"guidG3\", pm.variables.replaceIn('{{$randomUUID}}'));\r",
+							"\r",
+							"\r",
+							" \r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "JSESSIONID",
+						"value": "{{JSESSIONID_one}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"guid\":\"{{guidG3}}\",\"order\":null,\"payment\":null,\"advquantity\":0.0,\"deliveryList\":null,\"paymentStatus\":null,\"orderStatus\":{\"number\":{{ordernumber_1}},\"status\":\"apply\",\"description\":null},\"advStatus\":null}"
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/orderupdate/{{ordernumber_1}}",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"orderupdate",
+						"{{ordernumber_1}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "UpdateOrder_Repeat_Unversion",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"guid\":\"{{guidG3}}\",\"order\":{\"id\":0,\"userid\":1,\"price\":{{priceG2}},\"status\":\"payment\",\"number\":{{order_number}},\"version\":\"{{other_version}}\"}}"
+						},
+						"url": {
+							"raw": "http://{{baseUrl}}/order{{order_number}}",
+							"protocol": "http",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"order{{order_number}}"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Получить состояние заказа 1",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"test \", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData.success).to.eql(true)\r",
+							"pm.expect(jsonData.data.status).to.eql(\"p_failed\")\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "JSESSIONID",
+						"value": "{{JSESSIONID_twow}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://{{baseUrl}}/order?ordernumber={{ordernumber_1}}",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"order"
+					],
+					"query": [
+						{
+							"key": "ordernumber",
+							"value": "{{ordernumber_1}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Создать счет для Пок-ля 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"test create account \", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData.success).to.eql(true)\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"guidG\", pm.variables.replaceIn('{{$randomUUID}}'));\r",
+							"\r",
+							"\r",
+							" \r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "JSESSIONID",
+						"value": "{{JSESSIONID_twow}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"guid\":\"{{guidG}}\",\"account\":{\"id\":0,\"userid\":{{user_id_2}},\"acnumber\":0,\"summ\":1000.0,\"version\":0},\"payment\":null,\"orderStatus\":null,\"notification\":null}\r\n"
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/account",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"account"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "UpdateOrder_Repeat_Unversion",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"guid\":\"{{guidG3}}\",\"order\":{\"id\":0,\"userid\":1,\"price\":{{priceG2}},\"status\":\"payment\",\"number\":{{order_number}},\"version\":\"{{other_version}}\"}}"
+						},
+						"url": {
+							"raw": "http://{{baseUrl}}/order{{order_number}}",
+							"protocol": "http",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"order{{order_number}}"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "2-я попытка подт-дить заказ 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"test update \", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData.success).to.eql(true)\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"guidG3\", pm.variables.replaceIn('{{$randomUUID}}'));\r",
+							"\r",
+							"\r",
+							" \r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "JSESSIONID",
+						"value": "{{JSESSIONID_twow}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"guid\":\"{{guidG3}}\",\"order\":null,\"payment\":null,\"advquantity\":0.0,\"deliveryList\":null,\"paymentStatus\":null,\"orderStatus\":{\"number\":{{ordernumber_1}},\"status\":\"apply\",\"description\":null},\"advStatus\":null}"
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/orderupdate/{{ordernumber_1}}",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"orderupdate",
+						"{{ordernumber_1}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "UpdateOrder_Repeat_Unversion",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"guid\":\"{{guidG3}}\",\"order\":{\"id\":0,\"userid\":1,\"price\":{{priceG2}},\"status\":\"payment\",\"number\":{{order_number}},\"version\":\"{{other_version}}\"}}"
+						},
+						"url": {
+							"raw": "http://{{baseUrl}}/order{{order_number}}",
+							"protocol": "http",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"order{{order_number}}"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Получить состояние заказа 1",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"test \", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData.success).to.eql(true)\r",
+							"pm.expect(jsonData.data.status).to.eql(\"paid\")\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "JSESSIONID",
+						"value": "{{JSESSIONID_twow}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://{{baseUrl}}/order?ordernumber={{ordernumber_1}}",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"order"
+					],
+					"query": [
+						{
+							"key": "ordernumber",
+							"value": "{{ordernumber_1}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Пол-ть сос-ие счет Пок-ля 1",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"test \", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData.success).to.eql(true)\r",
+							"pm.expect(jsonData.data.sum).to.eql(99820)\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "JSESSIONID",
+						"value": "{{JSESSIONID_twow}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://{{baseUrl}}/accountbyuser?user={{user_id_2}}",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"accountbyuser"
+					],
+					"query": [
+						{
+							"key": "user",
+							"value": "{{user_id_2}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Создать курьера",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseJSON = JSON.parse(responseBody);\r",
+							"pm.collectionVariables.set(\"courier_id\", responseJSON[\"data\"]);\r",
+							"\r",
+							"pm.test(\"test create courier\", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData.success).to.eql(true)\r",
+							"pm.expect(jsonData.message).to.eql(\"successful operation\")\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"guidG\", pm.variables.replaceIn('{{$randomUUID}}'));\r",
+							"pm.collectionVariables.set(\"firstName\", pm.variables.replaceIn('{{$randomFirstName}}'));\r",
+							"pm.collectionVariables.set(\"lastName\", pm.variables.replaceIn('{{$randomLastName}}'));\r",
+							"pm.collectionVariables.set(\"phone\", pm.variables.replaceIn('{{$randomPhoneNumber}}'));\r",
+							"\r",
+							"\r",
+							" \r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "JSESSIONID",
+						"value": "{{JSESSIONID_four}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"guid\":\"{{guidG}}\",\"deliveryList\":null,\"courier\":{\"id\":0,\"name\":\"{{firstName}}\",\"surname\":\"{{lastName}}\",\"phone\":\"{{phone}}\",\"deliverytype\":1},\"deliveryCourier\":null,\"orderStatus\":null}"
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/courier",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"courier"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "UpdateOrder_Repeat_Unversion",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"guid\":\"{{guidG3}}\",\"order\":{\"id\":0,\"userid\":1,\"price\":{{priceG2}},\"status\":\"payment\",\"number\":{{order_number}},\"version\":\"{{other_version}}\"}}"
+						},
+						"url": {
+							"raw": "http://{{baseUrl}}/order{{order_number}}",
+							"protocol": "http",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"order{{order_number}}"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Пол-ть сос-ие доставки по заказа 1",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseJSON = JSON.parse(responseBody);\r",
+							"pm.collectionVariables.set(\"delivery_id\", responseJSON[\"data.id\"]);\r",
+							"\r",
+							"pm.test(\"test \", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData.success).to.eql(true)\r",
+							"pm.expect(jsonData.data.status).to.eql(\"on_delivery\")\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "JSESSIONID",
+						"value": "{{JSESSIONID_twow}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://{{baseUrl}}/deliverybyordernumber?ordernumber={{ordernumber_1}}",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"deliverybyordernumber"
+					],
+					"query": [
+						{
+							"key": "ordernumber",
+							"value": "{{ordernumber_1}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Отменить доставку заказа",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"guidG\", pm.variables.replaceIn('{{$randomUUID}}'));"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"test token data\", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData.success).to.eql(true)\r",
+							"pm.expect(jsonData.message).to.eql(\"delivery cancel\")\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "JSESSIONID",
+						"value": "{{JSESSIONID_four}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"guid\":\"{{guidG}}\",\"deliveryList\":null,\"courier\":null,\"deliveryCourier\":{\"id\":0,\"courierid\":{{courier_id}},\"deliveryid\":{{delivery_id}}},\"orderStatus\":{\"number\":{{ordernumber_1}},\"status\":\"d_cancel\",\"description\":null}}\r\n"
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/appointcourier",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"appointcourier"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Пол-ть сос-ие заказа 1",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"test \", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData.success).to.eql(true)\r",
+							"pm.expect(jsonData.data.status).to.eql(\"d_cancel\")\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "JSESSIONID",
+						"value": "{{JSESSIONID_twow}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://{{baseUrl}}/order?ordernumber={{ordernumber_1}}",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"order"
+					],
+					"query": [
+						{
+							"key": "ordernumber",
+							"value": "{{ordernumber_1}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Пол-ть сос-ие счет Пок-ля 1",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"test \", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData.success).to.eql(true)\r",
+							"pm.expect(jsonData.success.data.sum).to.eql(100000.0)\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "JSESSIONID",
+						"value": "{{JSESSIONID_twow}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://{{baseUrl}}/accountbyuser?user={{user_id_1}}",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"accountbyuser"
+					],
+					"query": [
+						{
+							"key": "user",
+							"value": "{{user_id_1}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Пол-ть статус  объявления(waiting)",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"test \", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData.success).to.eql(true)\r",
+							"pm.expect(jsonData.success.data.status).to.eql(\"waiting\")\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "JSESSIONID",
+						"value": "{{JSESSIONID_one}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://{{baseUrl}}/advbyadvnumber?advnumber={{advnumber}}",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"advbyadvnumber"
+					],
+					"query": [
+						{
+							"key": "advnumber",
+							"value": "{{advnumber}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2 Создать счет для Пок-ля 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseJSON = JSON.parse(responseBody);\r",
+							"pm.collectionVariables.set(\"user_3_account\", responseJSON[\"data\"]);\r",
+							"\r",
+							"pm.test(\"test create account \", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData.success).to.eql(true)\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"guidG\", pm.variables.replaceIn('{{$randomUUID}}'));\r",
+							"\r",
+							"\r",
+							" \r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "JSESSIONID",
+						"value": "{{JSESSIONID_three}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"guid\":\"{{guidG}}\",\"account\":{\"id\":0,\"userid\":{{user_id_3}},\"acnumber\":0,\"sum\":100000,\"version\":0},\"payment\":null,\"orderStatus\":null,\"notification\":null}"
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/account",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"account"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "UpdateOrder_Repeat_Unversion",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"guid\":\"{{guidG3}}\",\"order\":{\"id\":0,\"userid\":1,\"price\":{{priceG2}},\"status\":\"payment\",\"number\":{{order_number}},\"version\":\"{{other_version}}\"}}"
+						},
+						"url": {
+							"raw": "http://{{baseUrl}}/order{{order_number}}",
+							"protocol": "http",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"order{{order_number}}"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "2 Пополнить счет для Пок-ля 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"test \", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData.success).to.eql(true)\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"guidG\", pm.variables.replaceIn('{{$randomUUID}}'));\r",
+							"\r",
+							"\r",
+							" \r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "JSESSIONID",
+						"value": "{{JSESSIONID_three}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"guid\":\"{{guidG}}\",\"account\":{\"id\":0,\"userid\":{{user_id_3}},\"acnumber\":{{user_3_account}},\"summ\":15000.0,\"version\":0},\"payment\":null,\"orderStatus\":null,\"notification\":null}"
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/addsum",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"addsum"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "UpdateOrder_Repeat_Unversion",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"guid\":\"{{guidG3}}\",\"order\":{\"id\":0,\"userid\":1,\"price\":{{priceG2}},\"status\":\"payment\",\"number\":{{order_number}},\"version\":\"{{other_version}}\"}}"
+						},
+						"url": {
+							"raw": "http://{{baseUrl}}/order{{order_number}}",
+							"protocol": "http",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"order{{order_number}}"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "2 Пол-ть сос-ие счет Пок-ля 2",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"test \", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData.success).to.eql(true);\r",
+							"pm.expect(jsonData.data.sum).to.eql(99820)\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "JSESSIONID",
+						"value": "{{JSESSIONID_three}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://{{baseUrl}}/accountbyuser?user={{user_id_3}}",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"accountbyuser"
+					],
+					"query": [
+						{
+							"key": "user",
+							"value": "{{user_id_3}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2 Подт-дить заказ 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"test update \", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData.success).to.eql(true);\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"guidG3\", pm.variables.replaceIn('{{$randomUUID}}'));\r",
+							"\r",
+							"\r",
+							" \r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "JSESSIONID",
+						"value": "{{JSESSIONID_three}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"guid\":\"{{guidG3}}\",\"order\":null,\"payment\":null,\"advquantity\":0.0,\"deliveryList\":null,\"paymentStatus\":null,\"orderStatus\":{\"number\":{{ordernumber_2}},\"status\":\"apply\",\"description\":null},\"advStatus\":null}"
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/orderupdate/{{ordernumber_2}}",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"orderupdate",
+						"{{ordernumber_2}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "UpdateOrder_Repeat_Unversion",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"guid\":\"{{guidG3}}\",\"order\":{\"id\":0,\"userid\":1,\"price\":{{priceG2}},\"status\":\"payment\",\"number\":{{order_number}},\"version\":\"{{other_version}}\"}}"
+						},
+						"url": {
+							"raw": "http://{{baseUrl}}/order{{order_number}}",
+							"protocol": "http",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"order{{order_number}}"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "2 Пол-ть сос-ие заказа 2",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"test \", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData.success).to.eql(true)\r",
+							"pm.expect(jsonData.data.status).to.eql(\"d_consideration\")\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "JSESSIONID",
+						"value": "{{JSESSIONID_three}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://{{baseUrl}}/deliverybyordernumber?ordernumber={{ordernumber_2}}",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"deliverybyordernumber"
+					],
+					"query": [
+						{
+							"key": "ordernumber",
+							"value": "{{ordernumber_2}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2 Пол-ть сос-ие счет Пок-ля 2",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"test \", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData.success).to.eql(true)\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "JSESSIONID",
+						"value": "{{JSESSIONID_three}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://{{baseUrl}}/accountbyuser?user={{user_id_3}}",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"accountbyuser"
+					],
+					"query": [
+						{
+							"key": "user",
+							"value": "{{user_id_3}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2 Создать курьера",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseJSON = JSON.parse(responseBody);\r",
+							"pm.collectionVariables.set(\"courier_id_2\", responseJSON[\"data\"]);\r",
+							"\r",
+							"pm.test(\"test create courier\", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData.success).to.eql(true)\r",
+							"pm.expect(jsonData.message).to.eql(\"successful operation\")\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"guidG\", pm.variables.replaceIn('{{$randomUUID}}'));\r",
+							"pm.collectionVariables.set(\"firstName\", pm.variables.replaceIn('{{$randomFirstName}}'));\r",
+							"pm.collectionVariables.set(\"lastName\", pm.variables.replaceIn('{{$randomLastName}}'));\r",
+							"pm.collectionVariables.set(\"phone\", pm.variables.replaceIn('{{$randomPhoneNumber}}'));\r",
+							"\r",
+							"\r",
+							" \r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "JSESSIONID",
+						"value": "{{JSESSIONID_four}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"guid\":\"{{guidG}}\",\"deliveryList\":null,\"courier\":{\"id\":0,\"name\":\"{{firstName}}\",\"surname\":\"{{lastName}}\",\"phone\":\"{{phone}}\",\"deliverytype\":1},\"deliveryCourier\":null,\"orderStatus\":null}"
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/courier",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"courier"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "UpdateOrder_Repeat_Unversion",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"guid\":\"{{guidG3}}\",\"order\":{\"id\":0,\"userid\":1,\"price\":{{priceG2}},\"status\":\"payment\",\"number\":{{order_number}},\"version\":\"{{other_version}}\"}}"
+						},
+						"url": {
+							"raw": "http://{{baseUrl}}/order{{order_number}}",
+							"protocol": "http",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"order{{order_number}}"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "2 Пол-ть данные о доставке по номеру  заказа 2",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"pm.collectionVariables.set(\"delivery_id_2\", jsonData.data.id);\r",
+							"\r",
+							"pm.test(\"test \", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData.success).to.eql(true)\r",
+							"pm.expect(jsonData.data.status).to.eql(\"on_delivery\")\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "JSESSIONID",
+						"value": "{{JSESSIONID_four}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://{{baseUrl}}/deliverybyordernumber?ordernumber={{ordernumber_2}}",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"deliverybyordernumber"
+					],
+					"query": [
+						{
+							"key": "ordernumber",
+							"value": "{{ordernumber_2}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2 Назначить курьера на доставку заказа 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"test appointed courier \", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData.success).to.eql(true)\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.collectionVariables.set(\"guidG\", pm.variables.replaceIn('{{$randomUUID}}'));\r",
+							"pm.collectionVariables.set(\"firstName\", pm.variables.replaceIn('{{$randomFirstName}}'));\r",
+							"pm.collectionVariables.set(\"lastName\", pm.variables.replaceIn('{{$randomLastName}}'));\r",
+							"pm.collectionVariables.set(\"phone\", pm.variables.replaceIn('{{$randomPhoneNumber}}'));\r",
+							"\r",
+							"\r",
+							" \r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "JSESSIONID",
+						"value": "{{JSESSIONID_four}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"guid\":\"{{guidG}}\",\"deliveryList\":null,\"courier\":null,\"deliveryCourier\":{\"id\":0,\"courierid\":{{courier_id_2}},\"deliveryid\":{{delivery_id_2}}},\"orderStatus\":{\"number\":{{ordernumber_2}},\"status\":\"d_apply\",\"description\":null}}"
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/appointcourier",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"appointcourier"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "UpdateOrder_Repeat_Unversion",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"guid\":\"{{guidG3}}\",\"order\":{\"id\":0,\"userid\":1,\"price\":{{priceG2}},\"status\":\"payment\",\"number\":{{order_number}},\"version\":\"{{other_version}}\"}}"
+						},
+						"url": {
+							"raw": "http://{{baseUrl}}/order{{order_number}}",
+							"protocol": "http",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"order{{order_number}}"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Получить данные о заказе 2",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"test \", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData.success).to.eql(true)\r",
+							"pm.expect(jsonData.data.status).to.eql(\"d_apply\")\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "JSESSIONID",
+						"value": "{{JSESSIONID_four}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://{{baseUrl}}/order?ordernumber={{ordernumber_2}}",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"order"
+					],
+					"query": [
+						{
+							"key": "ordernumber",
+							"value": "{{ordernumber_2}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Получить все уведомления об оплатах",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"test \", function () {\r",
+							"pm.response.to.have.status(200);\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.expect(jsonData.success).to.eql(true)\r",
+							"\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "JSESSIONID",
+						"value": "{{JSESSIONID_four}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://{{baseUrl}}/allnotification",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"allnotification"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "password_user_1",
+			"value": ""
+		},
+		{
+			"key": "email",
+			"value": ""
+		},
+		{
+			"key": "username_user_1",
+			"value": ""
+		},
+		{
+			"key": "firstName",
+			"value": ""
+		},
+		{
+			"key": "lastName",
+			"value": ""
+		},
+		{
+			"key": "phone",
+			"value": ""
+		},
+		{
+			"key": "user_id_1",
+			"value": ""
+		},
+		{
+			"key": "JSESSIONID_one",
+			"value": ""
+		},
+		{
+			"key": "age",
+			"value": ""
+		},
+		{
+			"key": "country",
+			"value": ""
+		},
+		{
+			"key": "guidG",
+			"value": ""
+		},
+		{
+			"key": "guidS",
+			"value": ""
+		},
+		{
+			"key": "guidG2",
+			"value": ""
+		},
+		{
+			"key": "advnumber",
+			"value": ""
+		},
+		{
+			"key": "user_id_4",
+			"value": ""
+		},
+		{
+			"key": "JSESSIONID_four",
+			"value": ""
+		},
+		{
+			"key": "password_user_4",
+			"value": ""
+		},
+		{
+			"key": "username_user_4",
+			"value": ""
+		},
+		{
+			"key": "firstName_4",
+			"value": ""
+		},
+		{
+			"key": "lastName_4",
+			"value": ""
+		},
+		{
+			"key": "phone_4",
+			"value": ""
+		},
+		{
+			"key": "comment_adv",
+			"value": ""
+		},
+		{
+			"key": "password_user_2",
+			"value": ""
+		},
+		{
+			"key": "email_2",
+			"value": ""
+		},
+		{
+			"key": "username_user_2",
+			"value": ""
+		},
+		{
+			"key": "firstName_2",
+			"value": ""
+		},
+		{
+			"key": "lastName_2",
+			"value": ""
+		},
+		{
+			"key": "phone_2",
+			"value": ""
+		},
+		{
+			"key": "user_id_2",
+			"value": ""
+		},
+		{
+			"key": "JSESSIONID_two",
+			"value": ""
+		},
+		{
+			"key": "age_2",
+			"value": ""
+		},
+		{
+			"key": "country_2",
+			"value": ""
+		},
+		{
+			"key": "JSESSIONID_twow",
+			"value": ""
+		},
+		{
+			"key": "password_user_3",
+			"value": ""
+		},
+		{
+			"key": "email_3",
+			"value": ""
+		},
+		{
+			"key": "username_user_3",
+			"value": ""
+		},
+		{
+			"key": "firstName_3",
+			"value": ""
+		},
+		{
+			"key": "lastName_3",
+			"value": ""
+		},
+		{
+			"key": "phone_3",
+			"value": ""
+		},
+		{
+			"key": "user_id_3",
+			"value": ""
+		},
+		{
+			"key": "JSESSIONID_three",
+			"value": ""
+		},
+		{
+			"key": "streetfrom",
+			"value": ""
+		},
+		{
+			"key": "streetto",
+			"value": ""
+		},
+		{
+			"key": "ordernumber_1",
+			"value": ""
+		},
+		{
+			"key": "courier_id",
+			"value": ""
+		},
+		{
+			"key": "courier_id_2",
+			"value": ""
+		},
+		{
+			"key": "ordernumber_2",
+			"value": ""
+		},
+		{
+			"key": "guidG3",
+			"value": ""
+		},
+		{
+			"key": "delivery_id",
+			"value": ""
+		},
+		{
+			"key": "user_3_account",
+			"value": ""
+		},
+		{
+			"key": "delivery_id_2",
+			"value": ""
+		},
+		{
+			"key": "email_4",
+			"value": ""
+		}
+	]
+}

@@ -1,5 +1,5 @@
 helm chart доступны на GIT:
-https://github.com/AlexComIzum/otus_microarch/tree/master/otus_exercises/dipl/work
+https://github.com/AlexComIzum/otus_microarch/tree/master/otus_exercises/thirty/work
 
 Команды
 I) а) запустить kafka:
